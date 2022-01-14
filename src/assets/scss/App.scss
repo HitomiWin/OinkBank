@@ -1,0 +1,36 @@
+$theme-colors: (
+  "info": #fff,
+  "secondary": #707070,
+  "danger": #f79592,
+  "success": #14b394,
+  "warning": #344648,
+  "primary": #fcac35,
+  "light": #facf64a8,
+);
+
+@import "bootstrap/scss/bootstrap";
+
+#root {
+  background-color: #fcf7e4;
+  width: 100%;
+  height: 100vh;
+}
+
+#App {
+  position: relative;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 0.5em;
+  color: #707070;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: #fcac35;
+}
