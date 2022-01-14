@@ -3,8 +3,8 @@ import Container from "react-bootstrap/Container";
 
 export const PageNotFound: VFC = memo(() => {
   return (
-    <Container className="py-3">
-      <h1>Sorry, that page could not be found!</h1>
+    <Container className="py-3 text-center">
+      <h2>Page Not Found: 404</h2>
     </Container>
   );
 });
