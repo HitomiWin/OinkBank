@@ -23,26 +23,9 @@ export const Navigation: VFC = memo(() => {
           <Nav className="ms-auto">
             {currentUser ? (
               <>
-                <NavLink to="/" className="nav-link text-info ">
-                  <FontAwesomeIcon
-                    icon={faHome}
-                    size="lg"
-                    className="text-info"
-                  />
-                </NavLink>
-
                 <NavDropdown
-                  title={
-                    currentUser.displayName ?? (
-                      <FontAwesomeIcon
-                        icon={faUser}
-                        size="lg"
-                        className="text-info"
-                      />
-                    )
-                  }
+                  title={currentUser.displayName ?? currentUser.email}
                   id="basic-nav-dropdown"
-                  drop="start"
                 >
                   <NavLink to="/update-profile" className="dropdown-item">
                     Update Profile
