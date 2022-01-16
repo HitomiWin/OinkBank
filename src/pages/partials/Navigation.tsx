@@ -2,8 +2,7 @@ import React, { memo, VFC } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPiggyBank, faHome } from "@fortawesome/free-solid-svg-icons";
-import { faUser } from "@fortawesome/free-regular-svg-icons";
+import { faPiggyBank } from "@fortawesome/free-solid-svg-icons";
 import { useAuthContext } from "../../contexts/AuthContext";
 
 export const Navigation: VFC = memo(() => {

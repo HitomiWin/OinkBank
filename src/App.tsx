@@ -7,6 +7,7 @@ import { PageNotFound } from "./pages/PageNotFound";
 import { LoginPage } from "./pages/LoginPage";
 import { LogoutPage } from "./pages/LogoutPage";
 import { SignupPage } from "./pages/SignupPage";
+import { AddChildPage } from "./pages/AddChildPage";
 import { UpdateProfilePage } from "./pages/UpdateProfilePage";
 import RequireAuth from "./components/RequireAuth";
 
@@ -33,6 +34,14 @@ export const App: VFC = memo(() => {
             element={
               <RequireAuth redirectTo="/login">
                 <UpdateProfilePage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/register-child"
+            element={
+              <RequireAuth redirectTo="/login">
+                <AddChildPage />
               </RequireAuth>
             }
           />
