@@ -22,16 +22,17 @@ import useAddChild from "../../hooks/useAddChild";
 export const AddChildForm: VFC = memo(() => {
   const nameRef = useRef<HTMLInputElement>(null);
   const priceRef = useRef<HTMLInputElement>(null);
-  const [radioValue, setRadioValue] = useState("1");
+  const [isWeekly, setIsWeekly] = useState<boolean>(true);
+  // const [radioValue, setRadioValue] = useState("1");
   const navigate = useNavigate();
   const { currentUser } = useAuthContext();
 
   const childQuery: ChildQuery = useAddChild();
 
-  const radios = [
-    { name: "Weekly", value: "1" },
-    { name: "Monthly", value: "2" },
-  ];
+  // const radios = [
+  //   { name: "Weekly", value: "1" },
+  //   { name: "Monthly", value: "2" },
+  // ];
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -55,16 +56,16 @@ export const AddChildForm: VFC = memo(() => {
     }
 
     let nextDate =
-      radioValue === "1"
+      isWeekly === true
         ? nextMonday
         : moment().add(1, "M").startOf("month").format("YYYY-MM-DD"); // the first date of next month
 
-    if (currentUser) {
+    if (currentUser && isWeekly !== null) {
       await childQuery.addChild({
         name: nameRef.current.value,
         price: parseInt(priceRef.current.value, 10),
         parent: currentUser.uid,
-        isWeekly: radioValue === "1" ? true : false,
+        isWeekly,
         isPaused: false,
         nextDate,
         lastDate: moment().format("YYYY-MM-DD"),
@@ -74,17 +75,13 @@ export const AddChildForm: VFC = memo(() => {
 
       nameRef.current.value = "";
       priceRef.current.value = "";
-      setRadioValue("1");
+      setIsWeekly(true);
       navigate("/");
     }
   };
   if (childQuery.isError) {
     <Alert variant="danger">{childQuery.error}</Alert>;
   }
-  if (childQuery.isLoading) {
-    <p>Loading...</p>;
-  }
-
   return (
     <>
       <Row>
@@ -148,7 +145,36 @@ export const AddChildForm: VFC = memo(() => {
                       <Form.Label>Frequency</Form.Label>
                     </Col>
                     <ButtonGroup>
-                      {radios.map((radio, idx) => (
+                      <Col
+                        xs={{ span: 2, offset: 5 }}
+                        md={{ span: 2, offset: 2 }}
+                      >
+                        <Button
+                          className={`frequency-button ${
+                            isWeekly ? "active" : "inactive"
+                          }`}
+                          onClick={() => setIsWeekly(!isWeekly)}
+                          disabled={isWeekly}
+                        >
+                          Weekly
+                        </Button>
+                      </Col>
+                      <Col
+                        xs={{ span: 2, offset: 5 }}
+                        md={{ span: 2, offset: 2 }}
+                      >
+                        <Button
+                          className={`frequency-button ${
+                            !isWeekly ? "active" : "inactive"
+                          }`}
+                          onClick={() => setIsWeekly(!isWeekly)}
+                          disabled={!isWeekly}
+                        >
+                          Monthly
+                        </Button>
+                      </Col>
+
+                      {/* {radios.map((radio, idx) => (
                         <Col
                           key={idx}
                           xs={{ span: 2, offset: 5 }}
@@ -167,16 +193,16 @@ export const AddChildForm: VFC = memo(() => {
                             }
                           >
                             {radio.name}
-                          </ToggleButton>
-                        </Col>
-                      ))}
+                          </ToggleButton> */}
+                      {/* </Col>
+                      ))} */}
                     </ButtonGroup>
                   </Row>
                 </Form.Group>
                 <Row>
                   <Col xs={{ span: 2, offset: 8 }} md={{ span: 2, offset: 10 }}>
                     <Button
-                      disabled={childQuery.isLoading}
+                      disabled={childQuery.isLoading || isWeekly === null}
                       type="submit"
                       className="text-info mt-1"
                     >

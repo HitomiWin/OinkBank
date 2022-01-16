@@ -34,3 +34,17 @@ h6 {
 .dropdown-item:active {
   background-color: #fcac35;
 }
+
+.frequency-button {
+  &.active {
+    color: white;
+    border: white;
+    background-color: #ff9a04;
+  }
+
+  &.inactive {
+    color: white;
+    border: white;
+    background-color: #7070704d;
+  }
+}
