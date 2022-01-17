@@ -1,5 +1,6 @@
 import { FieldValue } from "firebase/firestore";
 export interface Child {
+  id: string;
   created: FieldValue;
   isPaused: boolean;
   isWeekly: boolean;

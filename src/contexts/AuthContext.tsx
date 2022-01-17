@@ -48,10 +48,7 @@ const AuthContextProvider: VFC<Props> = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  console.log("context");
-
   const signup = (email: string, password: string) => {
-    console.log("signup");
     return createUserWithEmailAndPassword(auth, email, password);
   };
 

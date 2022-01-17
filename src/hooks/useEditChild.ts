@@ -1,24 +1,22 @@
 import { useState } from "react";
-import { doc, setDoc } from "firebase/firestore";
-import { Child } from "../shared/interfaces";
+import { doc, updateDoc, DocumentData } from "firebase/firestore";
 
 import { db } from "../firebase";
 
-const useAddChild = () => {
+const useEditChild = () => {
   const [error, setError] = useState<null | boolean>(null);
   const [isError, setIsError] = useState<null | boolean>(null);
   const [isLoading, setIsLoading] = useState<boolean | undefined>();
   const [isSuccess, setIsSuccess] = useState<null | boolean>(null);
 
-  const addChild = async (childInfo: Child) => {
+  const mutate = async (id: string, childInfo: DocumentData) => {
     setError(null);
     setIsError(null);
     setIsSuccess(null);
     setIsLoading(true);
 
     try {
-      const ref = doc(db, "children", childInfo.id);
-      await setDoc(ref, childInfo);
+      await updateDoc(doc(db, "children", id), childInfo);
       setIsSuccess(true);
       setIsLoading(false);
     } catch (e: any) {
@@ -29,7 +27,7 @@ const useAddChild = () => {
     }
   };
 
-  return { error, isError, isLoading, isSuccess, addChild };
+  return { error, isError, isLoading, isSuccess, mutate };
 };
 
-export default useAddChild;
+export default useEditChild;

@@ -9,9 +9,8 @@ import {
   Card,
   Alert,
   ButtonGroup,
-  ToggleButton,
 } from "react-bootstrap";
-
+import { v4 as uuidv4 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
@@ -23,16 +22,11 @@ export const AddChildForm: VFC = memo(() => {
   const nameRef = useRef<HTMLInputElement>(null);
   const priceRef = useRef<HTMLInputElement>(null);
   const [isWeekly, setIsWeekly] = useState<boolean>(true);
-  // const [radioValue, setRadioValue] = useState("1");
+  const uuid: string = uuidv4();
   const navigate = useNavigate();
   const { currentUser } = useAuthContext();
 
   const childQuery: ChildQuery = useAddChild();
-
-  // const radios = [
-  //   { name: "Weekly", value: "1" },
-  //   { name: "Monthly", value: "2" },
-  // ];
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -62,6 +56,7 @@ export const AddChildForm: VFC = memo(() => {
 
     if (currentUser && isWeekly !== null) {
       await childQuery.addChild({
+        id: uuid,
         name: nameRef.current.value,
         price: parseInt(priceRef.current.value, 10),
         parent: currentUser.uid,
@@ -173,29 +168,6 @@ export const AddChildForm: VFC = memo(() => {
                           Monthly
                         </Button>
                       </Col>
-
-                      {/* {radios.map((radio, idx) => (
-                        <Col
-                          key={idx}
-                          xs={{ span: 2, offset: 5 }}
-                          md={{ span: 2, offset: 2 }}
-                        >
-                          <ToggleButton
-                            className="text-info my-1"
-                            id={`radio-${idx}`}
-                            type="radio"
-                            variant="primary"
-                            name="radio"
-                            value={radio.value}
-                            checked={radioValue === radio.value}
-                            onChange={(e) =>
-                              setRadioValue(e.currentTarget.value)
-                            }
-                          >
-                            {radio.name}
-                          </ToggleButton> */}
-                      {/* </Col>
-                      ))} */}
                     </ButtonGroup>
                   </Row>
                 </Form.Group>
