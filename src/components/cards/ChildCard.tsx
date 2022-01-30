@@ -1,4 +1,4 @@
-import { memo, VFC, useEffect } from "react";
+import { memo, VFC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Row, Col, Button, Card } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,26 +7,26 @@ import {
   faEdit,
   faArrowCircleRight,
 } from "@fortawesome/free-solid-svg-icons";
-import "../scss/App.scss";
-import { DocumentData } from "firebase/firestore";
+import { DocumentData, serverTimestamp } from "firebase/firestore";
 import moment from "moment";
 import useAddTransactions from "../../hooks/useAddTransactions";
 import useEditChild from "../../hooks/useEditChild";
+import { v4 as uuidv4 } from "uuid";
 
 interface Props {
   child: DocumentData;
 }
 
 export const ChildCard: VFC<Props> = memo(({ child }) => {
-  const { addTransaction } = useAddTransactions();
+  const { addTransaction } = useAddTransactions(child.id);
+  const [total, setTotal] = useState<number>(0);
   const mutation = useEditChild();
   const isRegular = true;
-
   const addTransactionWeekly = async () => {
     const startWeeklyDate = moment(
-      child.lastDate ?? moment().format("YYYY/MM/DD HH:mm:ss")
+      child.lastDate ?? moment().format("YYYY-MM-DD hh:mm:ss")
     );
-    const endWeeklyDate = moment().format("YYYY/MM/DD HH:mm:ss");
+    const endWeeklyDate = moment().format("YYYY-MM-DD hh:mm:ss");
     const day = 1; // 1=monday
     let results = [];
     const current = startWeeklyDate?.clone();
@@ -35,18 +35,17 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
     }
 
     if (results && results.length > 0) {
-      results.map(
-        async (result) =>
-          await addTransaction(
-            child.id,
-            isRegular,
-            child.price,
-            result.format("YYYY/MM/DD HH:mm:ss")
-          )
-      );
-      console.log({ results });
+      results.map(async (result) => {
+        await addTransaction({
+          id: uuidv4(),
+          created: serverTimestamp(),
+          paymentDate: result.format("YYYY-MM-DD hh:mm:ss"),
+          price: child.price,
+          isRegular,
+        });
+      });
       await mutation.mutate(child.id, {
-        lastDate: moment().format("YYYY/MM/DD HH:mm:ss"),
+        lastDate: moment().format("YYYY-MM-DD hh:mm:ss"),
       });
     }
     results = [];
@@ -55,21 +54,26 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
     const startMonthlyDate = moment(child.lastDate);
     const endMonthlyDate = moment()
       .startOf("month")
-      .format("YYYY/MM/DD HH:mm:ss");
+      .format("YYYY-MM-DD hh:mm:ss");
     let results = [];
     const current = startMonthlyDate.clone();
 
     while (current.isBefore(endMonthlyDate)) {
       current.add(1, "month");
-      results.push(current.startOf("month").format("YYYY/MM/DD HH:mm:ss"));
+      results.push(current.startOf("month").format("YYYY-MM-DD hh:mm:ss"));
       if (results && results.length > 0) {
-        results.map(
-          async (result) =>
-            await addTransaction(child.id, isRegular, child.price, result)
-        );
+        results.map(async (result) => {
+          await addTransaction({
+            id: uuidv4(),
+            created: serverTimestamp(),
+            paymentDate: result,
+            price: child.price,
+            isRegular,
+          });
+        });
         console.log("beforeMutate");
         await mutation.mutate(child.id, {
-          lastDate: moment().format("YYYY/MM/DD HH:mm:ss"),
+          lastDate: moment().format("YYYY-MM-DD hh:mm:ss"),
         });
       }
     }
@@ -78,17 +82,16 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
 
   useEffect(() => {
     if (child) {
-      console.log("child");
       if (child.isWeekly === true) {
-        console.log("true");
+        console.log("here");
         addTransactionWeekly();
       } else if (child.isWeekly === false) {
-        console.log("false");
         addTransactionMonthly();
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [child.id, isRegular, child.price]);
+
   const navigate = useNavigate();
 
   const handleCardOnClick = (

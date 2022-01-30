@@ -9,7 +9,6 @@ export interface Child {
   nextDate: string;
   parent: string;
   price: number;
-  total: number;
 }
 
 export interface ChildQuery {
@@ -18,4 +17,12 @@ export interface ChildQuery {
   isLoading: boolean | undefined;
   isSuccess: boolean | null;
   addChild: (childInfo: Child) => Promise<void>;
+}
+
+export interface Transaction {
+  id: string;
+  created: FieldValue;
+  paymentDate: string;
+  price: number;
+  isRegular: boolean;
 }

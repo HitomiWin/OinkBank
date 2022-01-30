@@ -1,39 +1,33 @@
 import { useState } from "react";
 import {
   collection,
-  addDoc,
+  setDoc,
+  doc,
   serverTimestamp,
   // query,
   // where,
   // orderBy,
-  DocumentData,
 } from "firebase/firestore";
 import { db } from "../firebase";
+import { Transaction } from "../shared/interfaces";
 
-const useAddTransactions = () => {
+const useAddTransactions = (id: string) => {
   const [error, setError] = useState<null | boolean>(null);
   const [isError, setIsError] = useState<null | boolean>(null);
   const [isLoading, setIsLoading] = useState<null | boolean>(null);
   const [isSuccess, setIsSuccess] = useState<null | boolean>(null);
 
-  const addTransaction = async (
-    id: string,
-    isRegular: boolean,
-    price: number,
-    paymentDate: string
-  ) => {
+  const addTransaction = async (transactionInfo: Transaction) => {
     setError(null);
     setIsError(null);
     setIsSuccess(null);
     setIsLoading(true);
 
     try {
-      await addDoc(collection(db, "children", id, "transactions"), {
-        created: serverTimestamp(),
-        paymentDate,
-        price,
-        isRegular,
-      });
+      const ref = doc(db, "children", id, "transations", transactionInfo.id);
+      console.log("usetransactions");
+      await setDoc(ref, transactionInfo);
+      setIsSuccess(true);
       setIsSuccess(true);
       setIsLoading(false);
     } catch (e: any) {

@@ -64,7 +64,6 @@ export const AddChildForm: VFC = memo(() => {
         isPaused: false,
         nextDate,
         lastDate: moment().format("YYYY-MM-DD"),
-        total: 0,
         created: serverTimestamp(),
       });
 

@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter } from "react-router-dom";
 import AuthContextProvider from "./contexts/AuthContext";
-import ChildContextProvider from "./contexts/ChildContex";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/scss/App.scss";
 import { App } from "./App";
@@ -23,9 +22,7 @@ ReactDOM.render(
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <AuthContextProvider>
-          <ChildContextProvider>
-            <App />
-          </ChildContextProvider>
+          <App />
         </AuthContextProvider>
       </BrowserRouter>
     </QueryClientProvider>

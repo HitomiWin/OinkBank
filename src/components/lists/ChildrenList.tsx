@@ -1,5 +1,4 @@
 import { memo, VFC } from "react";
-import "../scss/App.scss";
 import { Alert } from "react-bootstrap";
 import { ChildCard } from "../cards/ChildCard";
 import useGetChildren from "../../hooks/useGetChildren";
