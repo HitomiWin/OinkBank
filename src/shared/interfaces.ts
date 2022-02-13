@@ -6,7 +6,6 @@ export interface Child {
   isWeekly: boolean;
   lastDate: string;
   name: string;
-  nextDate: string;
   parent: string;
   price: number;
 }

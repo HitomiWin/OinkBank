@@ -34,26 +34,6 @@ export const AddChildForm: VFC = memo(() => {
       return;
     }
 
-    const monday = 1;
-    const today = moment().isoWeekday();
-    let nextMonday;
-    // if we haven't yet passed the day of the week that I need:
-    if (today <= monday) {
-      // then just give me this week's instance of that day
-      nextMonday = moment().isoWeekday(monday).format("YYYY-MM-DD");
-    } else {
-      // otherwise, give me *next week's* instance of that same day
-      nextMonday = moment()
-        .add(1, "weeks")
-        .isoWeekday(monday)
-        .format("YYYY-MM-DD");
-    }
-
-    let nextDate =
-      isWeekly === true
-        ? nextMonday
-        : moment().add(1, "M").startOf("month").format("YYYY-MM-DD"); // the first date of next month
-
     if (currentUser && isWeekly !== null) {
       await childQuery.addChild({
         id: uuid,
@@ -62,7 +42,6 @@ export const AddChildForm: VFC = memo(() => {
         parent: currentUser.uid,
         isWeekly,
         isPaused: false,
-        nextDate,
         lastDate: moment().format("YYYY-MM-DD"),
         created: serverTimestamp(),
       });

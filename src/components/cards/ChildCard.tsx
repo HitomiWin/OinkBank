@@ -71,7 +71,6 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
             isRegular,
           });
         });
-        console.log("beforeMutate");
         await mutation.mutate(child.id, {
           lastDate: moment().format("YYYY-MM-DD hh:mm:ss"),
         });
@@ -83,7 +82,6 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
   useEffect(() => {
     if (child) {
       if (child.isWeekly === true) {
-        console.log("here");
         addTransactionWeekly();
       } else if (child.isWeekly === false) {
         addTransactionMonthly();
@@ -117,8 +115,28 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
     });
   };
 
+  const monday = 1;
+  const today = moment().isoWeekday();
+  let nextMonday;
+  // if we haven't yet passed the day of the week that I need:
+  if (today <= monday) {
+    // then just give me this week's instance of that day
+    nextMonday = moment().isoWeekday(monday).format("YYYY-MM-DD");
+  } else {
+    // otherwise, give me *next week's* instance of that same day
+    nextMonday = moment()
+      .add(1, "weeks")
+      .isoWeekday(monday)
+      .format("YYYY-MM-DD");
+  }
+
+  let nextDate =
+    child.isWeekly === true
+      ? nextMonday
+      : moment().add(1, "M").startOf("month").format("YYYY-MM-DD"); // the first date of next month
+
   const start = moment();
-  const end = moment(child.nextDate);
+  const end = moment(nextDate);
   const diffDays = end.diff(start, "days") + 1;
 
   return (
