@@ -80,7 +80,7 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
   };
 
   useEffect(() => {
-    if (child) {
+    if (child && !child.isPause) {
       if (child.isWeekly === true) {
         addTransactionWeekly();
       } else if (child.isWeekly === false) {
@@ -88,7 +88,7 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [child.id, isRegular, child.price]);
+  }, [child.id, child.isPaused, child.isWeekly]);
 
   const navigate = useNavigate();
 
@@ -110,7 +110,9 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
     e: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     e.stopPropagation();
+
     mutation.mutate(child.id, {
+      lastDate: moment().format("YYYY-MM-DD hh:mm:ss"),
       isPaused: !child.isPaused,
     });
   };
