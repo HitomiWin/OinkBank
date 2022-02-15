@@ -32,9 +32,9 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
     const day = 1; // 1=monday
     let results = [];
     const current = startWeeklyDate.clone();
-    console.log(current.day(7 + day).isSameOrBefore(endWeeklyDate));
-    console.log("start", startWeeklyDate);
-    console.log("end", endWeeklyDate);
+    // console.log(current.day(7 + day).isSameOrBefore(endWeeklyDate));
+    // console.log("start", startWeeklyDate);
+    // console.log("end", endWeeklyDate);
     while (current.day(7 + day).isSameOrBefore(endWeeklyDate)) {
       results.push(current.clone());
     }

@@ -20,8 +20,8 @@ export interface ChildQuery {
 
 export interface Transaction {
   id: string;
-  created: FieldValue;
+  created?: FieldValue;
   paymentDate: string;
   price: number;
-  isRegular: boolean;
+  isRegular?: boolean;
 }

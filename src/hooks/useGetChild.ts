@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { doc, onSnapshot, DocumentData } from "firebase/firestore";
 
-const useGetChild = (col: string, id: string) => {
+const useGetChild = (id: string) => {
   const [isLoading, setIsLoading] = useState<boolean | null>(null);
   const [isError, setIsError] = useState<boolean | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -14,7 +14,7 @@ const useGetChild = (col: string, id: string) => {
     setError(null);
 
     // get document reference
-    const ref = doc(db, col, id);
+    const ref = doc(db, "children", id);
 
     // attach listener
     const unsubscribe = onSnapshot(
@@ -46,7 +46,7 @@ const useGetChild = (col: string, id: string) => {
       setData(null);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [col, id]);
+  }, [id]);
 
   return {
     isLoading,

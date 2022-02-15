@@ -7,7 +7,7 @@ import useGetChild from "../hooks/useGetChild";
 
 export const EditChildPage: VFC = memo(() => {
   const { id } = useParams();
-  const childQuery = useGetChild("children", id ?? "");
+  const childQuery = useGetChild(id ?? "");
 
   if (childQuery.isError) {
     return <Alert variant="warning">{childQuery.error}</Alert>;
