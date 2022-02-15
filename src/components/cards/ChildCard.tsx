@@ -6,6 +6,7 @@ import {
   faUserCircle,
   faEdit,
   faArrowCircleRight,
+  faLaptopHouse,
 } from "@fortawesome/free-solid-svg-icons";
 import { DocumentData, serverTimestamp } from "firebase/firestore";
 import moment from "moment";
@@ -22,45 +23,47 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
   const [total, setTotal] = useState<number>(0);
   const mutation = useEditChild();
   const isRegular = true;
+  const todaysDate = new Date().toLocaleDateString();
   const addTransactionWeekly = async () => {
     const startWeeklyDate = moment(
-      child.lastDate ?? moment().format("YYYY-MM-DD hh:mm:ss")
+      child.lastDate ?? moment().format("YYYY-MM-DD")
     );
-    const endWeeklyDate = moment().format("YYYY-MM-DD hh:mm:ss");
+    const endWeeklyDate = moment().format("YYYY-MM-DD");
     const day = 1; // 1=monday
     let results = [];
-    const current = startWeeklyDate?.clone();
-    while (current?.day(7 + day).isSameOrBefore(endWeeklyDate)) {
+    const current = startWeeklyDate.clone();
+    console.log(current.day(7 + day).isSameOrBefore(endWeeklyDate));
+    console.log("start", startWeeklyDate);
+    console.log("end", endWeeklyDate);
+    while (current.day(7 + day).isSameOrBefore(endWeeklyDate)) {
       results.push(current.clone());
     }
-
+    console.log(results);
     if (results && results.length > 0) {
       results.map(async (result) => {
         await addTransaction({
           id: uuidv4(),
           created: serverTimestamp(),
-          paymentDate: result.format("YYYY-MM-DD hh:mm:ss"),
+          paymentDate: result.format("YYYY-MM-DD 00:00:00"),
           price: child.price,
           isRegular,
         });
       });
       await mutation.mutate(child.id, {
-        lastDate: moment().format("YYYY-MM-DD hh:mm:ss"),
+        lastDate: moment().format("YYYY-MM-DD"),
       });
     }
     results = [];
   };
   const addTransactionMonthly = async () => {
     const startMonthlyDate = moment(child.lastDate);
-    const endMonthlyDate = moment()
-      .startOf("month")
-      .format("YYYY-MM-DD hh:mm:ss");
+    const endMonthlyDate = moment().startOf("month").format("YYYY-MM-DD");
     let results = [];
     const current = startMonthlyDate.clone();
 
     while (current.isBefore(endMonthlyDate)) {
       current.add(1, "month");
-      results.push(current.startOf("month").format("YYYY-MM-DD hh:mm:ss"));
+      results.push(current.startOf("month").format("YYYY-MM-DD"));
       if (results && results.length > 0) {
         results.map(async (result) => {
           await addTransaction({
@@ -72,7 +75,7 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
           });
         });
         await mutation.mutate(child.id, {
-          lastDate: moment().format("YYYY-MM-DD hh:mm:ss"),
+          lastDate: moment().format("YYYY-MM-DD"),
         });
       }
     }
@@ -80,7 +83,7 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
   };
 
   useEffect(() => {
-    if (child && !child.isPause) {
+    if (child && child.isPaused === false) {
       if (child.isWeekly === true) {
         addTransactionWeekly();
       } else if (child.isWeekly === false) {
@@ -112,7 +115,7 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
     e.stopPropagation();
 
     mutation.mutate(child.id, {
-      lastDate: moment().format("YYYY-MM-DD hh:mm:ss"),
+      lastDate: moment().format("YYYY-MM-DD 00:00:00"),
       isPaused: !child.isPaused,
     });
   };
@@ -121,21 +124,22 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
   const today = moment().isoWeekday();
   let nextMonday;
   // if we haven't yet passed the day of the week that I need:
-  if (today <= monday) {
+
+  if (today < monday) {
     // then just give me this week's instance of that day
-    nextMonday = moment().isoWeekday(monday).format("YYYY-MM-DD");
+    nextMonday = moment().isoWeekday(monday).format("YYYY-MM-DD 00:00:00");
   } else {
     // otherwise, give me *next week's* instance of that same day
     nextMonday = moment()
       .add(1, "weeks")
       .isoWeekday(monday)
-      .format("YYYY-MM-DD");
+      .format("YYYY-MM-DD 00:00:00");
   }
 
   let nextDate =
     child.isWeekly === true
       ? nextMonday
-      : moment().add(1, "M").startOf("month").format("YYYY-MM-DD"); // the first date of next month
+      : moment().add(1, "M").startOf("month").format("YYYY-MM-DD 00:00:00"); // the first date of next month
 
   const start = moment();
   const end = moment(nextDate);

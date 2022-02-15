@@ -12,7 +12,6 @@ import {
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import moment from "moment";
 import useEditChild from "../../hooks/useEditChild";
 
 interface Props {
@@ -31,20 +30,6 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
     e.preventDefault();
     if (!nameRef.current || !priceRef.current) {
       return;
-    }
-    const monday = 1;
-    const today = moment().isoWeekday();
-    let nextMonday;
-    // if we haven't yet passed the day of the week that I need:
-    if (today <= monday) {
-      // then just give me this week's instance of that day
-      nextMonday = moment().isoWeekday(monday).format("YYYY-MM-DD");
-    } else {
-      // otherwise, give me *next week's* instance of that same day
-      nextMonday = moment()
-        .add(1, "weeks")
-        .isoWeekday(monday)
-        .format("YYYY-MM-DD");
     }
 
     mutation.mutate(id, {
