@@ -7,7 +7,7 @@ interface Props {
 }
 
 export const HistoryCard: VFC<Props> = memo(({ transaction }) => {
-  const paymentDate = transaction.paymentDate.slice(0, -8);
+  const paymentDate = transaction.paymentDate;
 
   if (!transaction) {
     <p>No history</p>;

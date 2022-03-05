@@ -45,7 +45,7 @@ export const ChildHistoryList: VFC = memo(() => {
       await transactionsQuery.addTransaction({
         id: uuid,
         isRegular,
-        paymentDate: moment().format("YYYY/MM/DD HH:mm:ss"),
+        paymentDate: moment().format("YYYY/MM/DD"),
         price: parseInt(priceRef.current.value),
       });
     }

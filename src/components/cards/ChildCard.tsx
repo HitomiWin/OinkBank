@@ -25,26 +25,27 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
   const isRegular = true;
   const todaysDate = new Date().toLocaleDateString();
   const addTransactionWeekly = async () => {
-    const startWeeklyDate = moment(
-      child.lastDate ?? moment().format("YYYY-MM-DD")
-    );
+    const startWeeklyDate = moment(child.lastDate);
     const endWeeklyDate = moment().format("YYYY-MM-DD");
-    const day = 1; // 1=monday
-    let results = [];
+    let results: Array<string> = [];
     const current = startWeeklyDate.clone();
-    // console.log(current.day(7 + day).isSameOrBefore(endWeeklyDate));
-    // console.log("start", startWeeklyDate);
-    // console.log("end", endWeeklyDate);
-    while (current.day(7 + day).isSameOrBefore(endWeeklyDate)) {
-      results.push(current.clone());
+    const currentMonday = startWeeklyDate.clone().day(1);
+    console.log(current);
+    console.log(current.isAfter(startWeeklyDate));
+    console.log(current.isBefore(endWeeklyDate));
+    if (current.isAfter(startWeeklyDate)) {
+      results.push(currentMonday.format("YYYY-MM-DD"));
+    }
+    while (current.day(7 + 1).isBefore(endWeeklyDate)) {
+      results.push(current.format("YYYY-MM-DD"));
     }
     console.log(results);
-    if (results && results.length > 0) {
+    if (results.length > 0) {
       results.map(async (result) => {
         await addTransaction({
           id: uuidv4(),
           created: serverTimestamp(),
-          paymentDate: result.format("YYYY-MM-DD 00:00:00"),
+          paymentDate: result,
           price: child.price,
           isRegular,
         });
