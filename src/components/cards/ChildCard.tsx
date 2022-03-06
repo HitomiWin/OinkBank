@@ -12,6 +12,7 @@ import { DocumentData, serverTimestamp } from "firebase/firestore";
 import moment from "moment";
 import useAddTransactions from "../../hooks/useAddTransactions";
 import useEditChild from "../../hooks/useEditChild";
+import useGetTotalAmount from "../../utils/useGetTotalAmount";
 import { v4 as uuidv4 } from "uuid";
 
 interface Props {
@@ -20,26 +21,22 @@ interface Props {
 
 export const ChildCard: VFC<Props> = memo(({ child }) => {
   const { addTransaction } = useAddTransactions(child.id);
-  const [total, setTotal] = useState<number>(0);
+  const totalAmount = useGetTotalAmount(child.id);
   const mutation = useEditChild();
   const isRegular = true;
-  const todaysDate = new Date().toLocaleDateString();
+
   const addTransactionWeekly = async () => {
     const startWeeklyDate = moment(child.lastDate);
     const endWeeklyDate = moment().format("YYYY-MM-DD");
     let results: Array<string> = [];
     const current = startWeeklyDate.clone();
     const currentMonday = startWeeklyDate.clone().day(1);
-    console.log(current);
-    console.log(current.isAfter(startWeeklyDate));
-    console.log(current.isBefore(endWeeklyDate));
     if (current.isAfter(startWeeklyDate)) {
       results.push(currentMonday.format("YYYY-MM-DD"));
     }
     while (current.day(7 + 1).isBefore(endWeeklyDate)) {
       results.push(current.format("YYYY-MM-DD"));
     }
-    console.log(results);
     if (results.length > 0) {
       results.map(async (result) => {
         await addTransaction({
@@ -198,7 +195,7 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
                     <h5>Total</h5>
                   </Col>
                   <Col xs={{ span: 3, offset: 3 }} md={{ span: 3, offset: 2 }}>
-                    <h5>{child.total} kr</h5>
+                    <h5>{totalAmount} kr</h5>
                   </Col>
                 </Row>
                 <Row className="mb-2">
@@ -225,7 +222,7 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
                       onClick={handlePauseOnClick}
                       className="text-info"
                     >
-                      {child.isPaused ? <>Re Start ?</> : <>Pause</>}
+                      {child.isPaused ? <>Restart ?</> : <>Pause</>}
                     </Button>
                   </Col>
                 </Row>
