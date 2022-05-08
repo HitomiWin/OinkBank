@@ -114,12 +114,12 @@ export const AddChildForm: VFC = memo(() => {
 
                 <Form.Group id="frequency" className="mb-3 text-secondary">
                   <Row>
-                    <Col xs={3} md={2}>
+                    <Col xs={12}>
                       <Form.Label>Frequency</Form.Label>
                     </Col>
                     <ButtonGroup>
                       <Col
-                        xs={{ span: 2, offset: 5 }}
+                        xs={{ span: 2, offset: 0 }}
                         md={{ span: 2, offset: 2 }}
                       >
                         <Button
@@ -133,8 +133,8 @@ export const AddChildForm: VFC = memo(() => {
                         </Button>
                       </Col>
                       <Col
-                        xs={{ span: 2, offset: 5 }}
-                        md={{ span: 2, offset: 2 }}
+                        xs={{ span: 2, offset: 6 }}
+                        md={{ span: 2, offset: 3 }}
                       >
                         <Button
                           className={`frequency-button ${
@@ -150,11 +150,15 @@ export const AddChildForm: VFC = memo(() => {
                   </Row>
                 </Form.Group>
                 <Row>
-                  <Col xs={{ span: 2, offset: 8 }} md={{ span: 2, offset: 10 }}>
+                  <Col
+                    xs={{ span: 2, offset: 8 }}
+                    md={{ span: 2, offset: 9 }}
+                    lg={{ span: 2, offset: 10 }}
+                  >
                     <Button
                       disabled={childQuery.isLoading || isWeekly === null}
                       type="submit"
-                      className="text-info mt-1"
+                      className="text-info px-3 mt-1"
                     >
                       Save
                     </Button>

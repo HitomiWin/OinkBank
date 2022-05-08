@@ -1,13 +1,5 @@
 import { useState } from "react";
-import {
-  collection,
-  setDoc,
-  doc,
-  serverTimestamp,
-  // query,
-  // where,
-  // orderBy,
-} from "firebase/firestore";
+import { setDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
 import { Transaction } from "../shared/interfaces";
 
@@ -22,7 +14,6 @@ const useAddTransactions = (id: string) => {
     setIsError(null);
     setIsSuccess(null);
     setIsLoading(true);
-
     try {
       const ref = doc(db, "children", id, "transactions", transactionInfo.id);
       await setDoc(ref, transactionInfo);

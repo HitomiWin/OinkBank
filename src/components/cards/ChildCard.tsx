@@ -1,4 +1,4 @@
-import { memo, VFC, useEffect, useState } from "react";
+import { memo, VFC, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Row, Col, Button, Card } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,13 +6,12 @@ import {
   faUserCircle,
   faEdit,
   faArrowCircleRight,
-  faLaptopHouse,
 } from "@fortawesome/free-solid-svg-icons";
 import { DocumentData, serverTimestamp } from "firebase/firestore";
 import moment from "moment";
 import useAddTransactions from "../../hooks/useAddTransactions";
 import useEditChild from "../../hooks/useEditChild";
-import useGetTotalAmount from "../../utils/useGetTotalAmount";
+import useGetTotalAmount from "../../hooks/useGetTotalAmount";
 import { v4 as uuidv4 } from "uuid";
 
 interface Props {
@@ -24,17 +23,12 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
   const totalAmount = useGetTotalAmount(child.id);
   const mutation = useEditChild();
   const isRegular = true;
-
   const addTransactionWeekly = async () => {
     const startWeeklyDate = moment(child.lastDate);
     const endWeeklyDate = moment().format("YYYY-MM-DD");
     let results: Array<string> = [];
     const current = startWeeklyDate.clone();
-    const currentMonday = startWeeklyDate.clone().day(1);
-    if (current.isAfter(startWeeklyDate)) {
-      results.push(currentMonday.format("YYYY-MM-DD"));
-    }
-    while (current.day(7 + 1).isBefore(endWeeklyDate)) {
+    while (current.day(7 + 1).isSameOrBefore(endWeeklyDate)) {
       results.push(current.format("YYYY-MM-DD"));
     }
     if (results.length > 0) {
@@ -58,7 +52,6 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
     const endMonthlyDate = moment().startOf("month").format("YYYY-MM-DD");
     let results = [];
     const current = startMonthlyDate.clone();
-
     while (current.isBefore(endMonthlyDate)) {
       current.add(1, "month");
       results.push(current.startOf("month").format("YYYY-MM-DD"));
@@ -113,7 +106,7 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
     e.stopPropagation();
 
     mutation.mutate(child.id, {
-      lastDate: moment().format("YYYY-MM-DD 00:00:00"),
+      lastDate: moment().format("YYYY-MM-DD "),
       isPaused: !child.isPaused,
     });
   };
@@ -125,19 +118,19 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
 
   if (today < monday) {
     // then just give me this week's instance of that day
-    nextMonday = moment().isoWeekday(monday).format("YYYY-MM-DD 00:00:00");
+    nextMonday = moment().isoWeekday(monday).format("YYYY-MM-DD");
   } else {
     // otherwise, give me *next week's* instance of that same day
     nextMonday = moment()
       .add(1, "weeks")
       .isoWeekday(monday)
-      .format("YYYY-MM-DD 00:00:00");
+      .format("YYYY-MM-DD");
   }
 
   let nextDate =
     child.isWeekly === true
       ? nextMonday
-      : moment().add(1, "M").startOf("month").format("YYYY-MM-DD 00:00:00"); // the first date of next month
+      : moment().add(1, "M").startOf("month").format("YYYY-MM-DD"); // the first date of next month
 
   const start = moment();
   const end = moment(nextDate);

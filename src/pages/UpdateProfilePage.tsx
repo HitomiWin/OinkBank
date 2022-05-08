@@ -11,7 +11,6 @@ export const UpdateProfilePage: VFC = memo(() => {
   const passwordConfirmRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<null | string>(null);
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState<null | string>(null);
   const { currentUser, setDisplayName, setEmail, setPassword } =
     useAuthContext();
 
@@ -22,31 +21,26 @@ export const UpdateProfilePage: VFC = memo(() => {
     }
 
     setError(null);
-    setMessage(null);
 
     try {
       setLoading(true);
       if (!displayNameRef.current) {
         return;
       } else if (displayNameRef.current.value !== currentUser?.displayName) {
-        console.log("changing displayname");
         await setDisplayName(displayNameRef.current.value);
       }
       if (!emailRef.current) {
         return;
       } else if (emailRef.current.value !== currentUser?.email) {
-        console.log("changing email");
         await setEmail(emailRef.current.value);
       }
 
       if (!passwordRef.current) {
         return;
       } else if (passwordRef.current.value) {
-        console.log("changing password");
         await setPassword(passwordRef.current.value);
       }
 
-      setMessage("Profile successfully updated");
       setLoading(false);
     } catch (e) {
       setError("Error updating profile. Try logging out and in again.");
@@ -72,8 +66,6 @@ export const UpdateProfilePage: VFC = memo(() => {
                 </div>
               </Card.Title>
               {error && <Alert variant="danger">{error}</Alert>}
-              {message && <Alert variant="success">{message}</Alert>}
-
               <Form onSubmit={handleSubmit}>
                 <Form.Group id="displayName" className="mb-3 text-secondary">
                   <Form.Label>Name</Form.Label>

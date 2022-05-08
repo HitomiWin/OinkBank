@@ -28,11 +28,9 @@ export const SignupPage: VFC = memo(() => {
 
     try {
       setLoading(true);
-      console.log("try");
       await signup(emailRef.current.value, passwordRef.current.value);
       navigate("/");
     } catch (e: any) {
-      console.log("catch");
       setError(e.message);
       setLoading(false);
     }

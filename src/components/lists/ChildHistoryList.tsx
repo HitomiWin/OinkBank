@@ -17,6 +17,7 @@ import { HistoryCard } from "../../components/cards/HistoryCard";
 import { Transaction } from "../../shared/interfaces";
 import useAddTransactions from "../../hooks/useAddTransactions";
 import useGetTransactions from "../../hooks/useGetTransactions";
+import useGetTotalAmount from "../../hooks/useGetTotalAmount";
 
 export const ChildHistoryList: VFC = memo(() => {
   const { id } = useParams();
@@ -33,7 +34,29 @@ export const ChildHistoryList: VFC = memo(() => {
       return { id: transaction.id, ...transaction.data() };
     }
   );
-
+  const totalAmount = useGetTotalAmount(id ?? "");
+  const plusTen = () => {
+    if (priceRef.current) {
+      let numberPrice = 0;
+      if (priceRef.current.value === "") {
+        numberPrice = 10;
+      } else {
+        numberPrice = parseInt(priceRef.current.value, 10) + 10;
+      }
+      priceRef.current.value = numberPrice.toString();
+    }
+  };
+  const minusTen = () => {
+    if (priceRef.current) {
+      let numberPrice = 0;
+      if (priceRef.current.value === "") {
+        numberPrice = -10;
+      } else {
+        numberPrice = parseInt(priceRef.current.value, 10) - 10;
+      }
+      priceRef.current.value = numberPrice.toString();
+    }
+  };
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const isRegular = false;
@@ -41,11 +64,12 @@ export const ChildHistoryList: VFC = memo(() => {
     if (!priceRef.current || !priceRef.current.value.length) {
       return;
     }
+
     if (child) {
       await transactionsQuery.addTransaction({
         id: uuid,
         isRegular,
-        paymentDate: moment().format("YYYY/MM/DD"),
+        paymentDate: moment().format("YYYY-MM-DD"),
         price: parseInt(priceRef.current.value),
       });
     }
@@ -82,7 +106,7 @@ export const ChildHistoryList: VFC = memo(() => {
                 <h5>Total</h5>
               </Col>
               <Col>
-                <h4>{child.total} kr</h4>
+                <h4>{totalAmount} kr</h4>
               </Col>
             </Col>
           </Row>
@@ -90,9 +114,6 @@ export const ChildHistoryList: VFC = memo(() => {
             <Card.Body>
               {transactionsQuery.isError && (
                 <Alert variant="danger"> {transactionsQuery.error} </Alert>
-              )}
-              {transactionsQuery.isSuccess && (
-                <Alert variant="success">Sucsess!</Alert>
               )}
               <Card.Title className="text-secondary text-center mb-4">
                 Add or Reduce
@@ -105,7 +126,8 @@ export const ChildHistoryList: VFC = memo(() => {
                         icon={faPlusCircle}
                         color="#f0ad4e"
                         size="lg"
-                      ></FontAwesomeIcon>
+                        onClick={plusTen}
+                      />
                     </Col>
                     <Col>
                       <Form.Control
@@ -119,10 +141,11 @@ export const ChildHistoryList: VFC = memo(() => {
                         icon={faMinusCircle}
                         color="#f0ad4e"
                         size="lg"
-                      ></FontAwesomeIcon>
+                        onClick={minusTen}
+                      />
                     </Col>
                   </Row>
-                  <Row className="j ">
+                  <Row className="justify-content-end px-2">
                     <Col xs={2} className="mt-4">
                       <Button
                         type="submit"
