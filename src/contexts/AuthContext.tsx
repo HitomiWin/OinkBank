@@ -7,12 +7,13 @@ import React, {
   useState,
 } from "react";
 
+import { Spinner } from "react-bootstrap";
+
 import {
   User,
   UserCredential,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
-  // sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
   updateEmail,
@@ -61,10 +62,6 @@ const AuthContextProvider: VFC<Props> = ({ children }) => {
     navigate("/login");
   };
 
-  // const resetPassword = (email: string) => {
-  //   return sendPasswordResetEmail(auth, email);
-  // };
-
   const setEmail = (newEmail: string) => {
     if (currentUser) return updateEmail(currentUser, newEmail);
   };
@@ -93,15 +90,17 @@ const AuthContextProvider: VFC<Props> = ({ children }) => {
     login,
     logout,
     signup,
-    // resetPassword,
     setDisplayName,
     setEmail,
     setPassword,
   };
-
   return (
     <AuthContext.Provider value={contextValues}>
-      {loading && <p>Loading...</p>}
+      {loading && (
+        <div className="spinner-wrapper">
+          <Spinner animation="grow" variant="secondary" />
+        </div>
+      )}
       {!loading && children}
     </AuthContext.Provider>
   );

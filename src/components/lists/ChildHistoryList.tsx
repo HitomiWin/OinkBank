@@ -1,5 +1,5 @@
 import React, { memo, VFC, useRef } from "react";
-import { Row, Col, Card, Button, Form } from "react-bootstrap";
+import { Row, Col, Card, Button, Form, Spinner, Alert } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUserCircle,
@@ -7,7 +7,6 @@ import {
   faMinusCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
-import { Alert } from "react-bootstrap";
 import { DocumentData } from "firebase/firestore";
 import moment from "moment";
 import { v4 as uuidv4 } from "uuid";
@@ -80,7 +79,11 @@ export const ChildHistoryList: VFC = memo(() => {
   }
 
   if (childQuery.isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <div className="spinner-wrapper">
+        <Spinner animation="grow" variant="secondary" />
+      </div>
+    );
   }
 
   if (transactionsQuery && priceRef.current) {
@@ -169,18 +172,16 @@ export const ChildHistoryList: VFC = memo(() => {
             )}
             {getTransactionsQuery.isLoading && <p>Loading...</p>}
 
-            {transActions ? (
+            {transActions && transActions.length ? (
               transActions.map((transaction: Transaction) => (
                 <HistoryCard key={transaction.id} transaction={transaction} />
               ))
             ) : (
-              <p>No History</p>
+              <h4 className="text-center my-4">No history</h4>
             )}
           </Row>
         </Col>
       </Row>
     </>
-  ) : (
-    <p>No child</p>
-  );
+  ) : null;
 });
