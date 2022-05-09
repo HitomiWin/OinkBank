@@ -49,26 +49,26 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
   };
   const addTransactionMonthly = async () => {
     const startMonthlyDate = moment(child.lastDate);
-    const endMonthlyDate = moment().startOf("month").format("YYYY-MM-DD");
+    const endMonthlyDate = moment().format("YYYY-MM-DD");
     let results = [];
     const current = startMonthlyDate.clone();
-    while (current.isBefore(endMonthlyDate)) {
-      current.add(1, "month");
+    while (current.isSameOrBefore(endMonthlyDate)) {
       results.push(current.startOf("month").format("YYYY-MM-DD"));
-      if (results && results.length > 0) {
-        results.map(async (result) => {
-          await addTransaction({
-            id: uuidv4(),
-            created: serverTimestamp(),
-            paymentDate: result,
-            price: child.price,
-            isRegular,
-          });
+      current.add(1, "month");
+    }
+    if (results && results.length > 0) {
+      results.map(async (result) => {
+        await addTransaction({
+          id: uuidv4(),
+          created: serverTimestamp(),
+          paymentDate: result,
+          price: child.price,
+          isRegular,
         });
-        await mutation.mutate(child.id, {
-          lastDate: moment().format("YYYY-MM-DD"),
-        });
-      }
+      });
+      await mutation.mutate(child.id, {
+        lastDate: moment().format("YYYY-MM-DD"),
+      });
     }
     results = [];
   };

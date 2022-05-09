@@ -1,4 +1,4 @@
-import useGetTransactions from "../hooks/useGetTransactions";
+import useGetTransactions from "./useGetTransactions";
 import { DocumentData } from "firebase/firestore";
 
 const useGetTotalAmount = (id: string) => {
