@@ -18,7 +18,6 @@ import {
   signOut,
   updateEmail,
   updatePassword,
-  updateProfile,
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase/index";
@@ -29,8 +28,6 @@ interface AuthContextProps {
   loading: boolean;
   logout: () => Promise<void>;
   signup: (email: string, password: string) => Promise<UserCredential>;
-  // resetPassword,
-  setDisplayName: (name: string) => Promise<void> | undefined;
   setEmail: (newEmail: string) => Promise<void> | undefined;
   setPassword: (newPassword: string) => Promise<void> | undefined;
 }
@@ -70,13 +67,6 @@ const AuthContextProvider: VFC<Props> = ({ children }) => {
     if (currentUser) return updatePassword(currentUser, newPassword);
   };
 
-  const setDisplayName = (name: string) => {
-    if (currentUser)
-      return updateProfile(currentUser, {
-        displayName: name,
-      });
-  };
-
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
@@ -90,7 +80,6 @@ const AuthContextProvider: VFC<Props> = ({ children }) => {
     login,
     logout,
     signup,
-    setDisplayName,
     setEmail,
     setPassword,
   };

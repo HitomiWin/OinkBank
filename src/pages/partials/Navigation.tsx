@@ -26,9 +26,6 @@ export const Navigation: VFC = memo(() => {
                   title={currentUser.displayName ?? currentUser.email}
                   id="basic-nav-dropdown"
                 >
-                  <NavLink to="/update-profile" className="dropdown-item">
-                    Update Profile
-                  </NavLink>
                   <NavLink to="/register-child" className="dropdown-item">
                     Add Child
                   </NavLink>

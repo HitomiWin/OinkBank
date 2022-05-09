@@ -1,10 +1,12 @@
 import { memo, VFC } from "react";
-import { Alert, Spinner } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { Alert, Spinner, Button } from "react-bootstrap";
 import { ChildCard } from "../cards/ChildCard";
 import useGetChildren from "../../hooks/useGetChildren";
 
 export const ChildrenList: VFC = memo(() => {
   const childrenQuery = useGetChildren();
+  const navigate = useNavigate();
 
   if (childrenQuery.isError) {
     return <Alert variant="warning">{childrenQuery.error}</Alert>;
@@ -24,10 +26,29 @@ export const ChildrenList: VFC = memo(() => {
       {childrenQuery.data.map((child) => (
         <ChildCard key={child.id} child={child} />
       ))}
+      <div className="text-center">
+        <Button
+          variant="primary"
+          className="text-info my-2"
+          onClick={() => {
+            navigate("/register-child");
+          }}
+        >
+          Add en child?
+        </Button>
+      </div>
     </>
   ) : (
-    <div className="spinner-wrapper">
-      <h3 className="text-center">No Children</h3>
+    <div className="text-center">
+      <Button
+        variant="primary"
+        className="text-info  mt-2"
+        onClick={() => {
+          navigate("/register-child");
+        }}
+      >
+        Add en child?
+      </Button>
     </div>
   );
 });
