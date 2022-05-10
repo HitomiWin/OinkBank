@@ -34,7 +34,7 @@ export const ChildrenList: VFC = memo(() => {
             navigate("/register-child");
           }}
         >
-          Add en child?
+          Add a child?
         </Button>
       </div>
     </>

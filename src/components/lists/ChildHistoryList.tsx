@@ -1,11 +1,7 @@
 import React, { memo, VFC, useRef } from "react";
 import { Row, Col, Card, Button, Form, Spinner, Alert } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUserCircle,
-  faPlusCircle,
-  faMinusCircle,
-} from "@fortawesome/free-solid-svg-icons";
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import { DocumentData } from "firebase/firestore";
 import moment from "moment";
@@ -34,28 +30,7 @@ export const ChildHistoryList: VFC = memo(() => {
     }
   );
   const totalAmount = useGetTotalAmount(id ?? "");
-  const plusTen = () => {
-    if (priceRef.current) {
-      let numberPrice = 0;
-      if (priceRef.current.value === "") {
-        numberPrice = 10;
-      } else {
-        numberPrice = parseInt(priceRef.current.value, 10) + 10;
-      }
-      priceRef.current.value = numberPrice.toString();
-    }
-  };
-  const minusTen = () => {
-    if (priceRef.current) {
-      let numberPrice = 0;
-      if (priceRef.current.value === "") {
-        numberPrice = -10;
-      } else {
-        numberPrice = parseInt(priceRef.current.value, 10) - 10;
-      }
-      priceRef.current.value = numberPrice.toString();
-    }
-  };
+
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const isRegular = false;
@@ -119,37 +94,21 @@ export const ChildHistoryList: VFC = memo(() => {
                 <Alert variant="danger"> {transactionsQuery.error} </Alert>
               )}
               <Card.Title className="text-secondary text-center mb-4">
-                Add or Reduce
+                Deposit or withdraw amount
               </Card.Title>
               <Form onSubmit={handleOnSubmit}>
                 <Form.Group controlId="formBasicEmail">
-                  <Row className="justify-content-between align-items-center">
-                    <Col xs={2} className="text-center">
-                      <FontAwesomeIcon
-                        icon={faPlusCircle}
-                        color="#f0ad4e"
-                        size="lg"
-                        onClick={plusTen}
-                      />
-                    </Col>
-                    <Col>
+                  <Row className="justify-content-center align-items-center">
+                    <Col md={11} lg={10}>
                       <Form.Control
                         type="number"
-                        placeholder="Enter price"
+                        placeholder="Enter amount"
                         ref={priceRef}
-                      />
-                    </Col>
-                    <Col xs={2} className="text-center">
-                      <FontAwesomeIcon
-                        icon={faMinusCircle}
-                        color="#f0ad4e"
-                        size="lg"
-                        onClick={minusTen}
                       />
                     </Col>
                   </Row>
                   <Row className="justify-content-end px-2">
-                    <Col xs={2} className="mt-4">
+                    <Col xs={2} className="mt-4 me-3">
                       <Button
                         type="submit"
                         variant="primary"
@@ -165,7 +124,7 @@ export const ChildHistoryList: VFC = memo(() => {
             </Card.Body>
           </Card>
 
-          <h4 className="text-center my-4">History</h4>
+          <h4 className="text-center my-4">History of deposit or withdraw </h4>
           <Row>
             {getTransactionsQuery.isError && (
               <Alert variant="danger"> {getTransactionsQuery.error} </Alert>

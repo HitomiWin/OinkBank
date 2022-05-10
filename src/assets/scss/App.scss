@@ -42,6 +42,10 @@ h6 {
 .dropdown-item:active {
   background-color: #fcac35;
 }
+.back-button {
+  text-decoration: underline;
+  cursor: pointer;
+}
 
 .frequency-button {
   &.active {

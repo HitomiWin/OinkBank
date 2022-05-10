@@ -95,7 +95,7 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
                 <Form.Group id="price" className="mb-3  text-secondary">
                   <Row>
                     <Col xs={12} md={2}>
-                      <Form.Label>Price</Form.Label>
+                      <Form.Label>Deposit</Form.Label>
                     </Col>
                     <Col>
                       <Form.Control
@@ -118,7 +118,7 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
                     </Col>
                     <ButtonGroup>
                       <Col
-                        xs={{ span: 2, offset: 5 }}
+                        xs={{ span: 2, offset: 0 }}
                         md={{ span: 2, offset: 2 }}
                       >
                         <Button
@@ -132,8 +132,8 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
                         </Button>
                       </Col>
                       <Col
-                        xs={{ span: 2, offset: 5 }}
-                        md={{ span: 2, offset: 2 }}
+                        xs={{ span: 2, offset: 6 }}
+                        md={{ span: 2, offset: 3 }}
                       >
                         <Button
                           className={`frequency-button ${
@@ -149,7 +149,11 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
                   </Row>
                 </Form.Group>
                 <Row>
-                  <Col xs={{ span: 2, offset: 8 }} md={{ span: 2, offset: 10 }}>
+                  <Col
+                    xs={{ span: 2, offset: 8 }}
+                    md={{ span: 2, offset: 9 }}
+                    lg={{ span: 2, offset: 10 }}
+                  >
                     <Button
                       disabled={mutation.isLoading}
                       type="submit"

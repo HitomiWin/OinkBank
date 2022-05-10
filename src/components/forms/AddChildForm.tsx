@@ -96,7 +96,7 @@ export const AddChildForm: VFC = memo(() => {
                 <Form.Group id="price" className="mb-3  text-secondary">
                   <Row>
                     <Col xs={12} md={2}>
-                      <Form.Label>Price</Form.Label>
+                      <Form.Label>Deposit</Form.Label>
                     </Col>
                     <Col>
                       <Form.Control
