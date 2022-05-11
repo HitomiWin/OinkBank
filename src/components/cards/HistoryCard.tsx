@@ -1,6 +1,5 @@
 import { memo, VFC } from "react";
 import { Col, Card } from "react-bootstrap";
-import { Transaction } from "../../shared/interfaces";
 import { DocumentData } from "firebase/firestore";
 
 interface Props {

@@ -1,5 +1,6 @@
 import { memo, VFC } from "react";
 import { Route, Routes } from "react-router-dom";
+import { ReactQueryDevtools } from "react-query/devtools";
 import { Container } from "react-bootstrap";
 import { Navigation } from "./pages/partials/Navigation";
 import { HomePage } from "./pages/HomePage";
@@ -57,6 +58,7 @@ export const App: VFC = memo(() => {
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Container>
+      <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
     </>
   );
 });

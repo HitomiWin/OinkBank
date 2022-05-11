@@ -10,7 +10,6 @@ import { v4 as uuidv4 } from "uuid";
 import { useAuthContext } from "../../contexts/AuthContext";
 import useGetChild from "../../hooks/useGetChild";
 import { HistoryCard } from "../../components/cards/HistoryCard";
-import { Transaction } from "../../shared/interfaces";
 import useAddTransactions from "../../hooks/useAddTransactions";
 import useGetTransactions from "../../hooks/useGetTransactions";
 import useGetTotalAmount from "../../hooks/useGetTotalAmount";
@@ -25,7 +24,6 @@ export const ChildHistoryList: VFC = memo(() => {
   const child = childQuery.data;
   const transactionsQuery = useAddTransactions(id ?? "");
   const transActions = useGetTransactions(id ?? "");
-  // const transActions = transActions()
   const totalAmount = useGetTotalAmount(id ?? "");
 
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
