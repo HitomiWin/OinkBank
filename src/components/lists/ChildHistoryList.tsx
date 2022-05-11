@@ -3,7 +3,7 @@ import { Row, Col, Card, Button, Form, Spinner, Alert } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
-import { DocumentData } from "firebase/firestore";
+import { DocumentData, serverTimestamp } from "firebase/firestore";
 import moment from "moment";
 import { v4 as uuidv4 } from "uuid";
 
@@ -42,9 +42,10 @@ export const ChildHistoryList: VFC = memo(() => {
     if (child) {
       await transactionsQuery.addTransaction({
         id: uuid,
-        isRegular,
+        created: serverTimestamp(),
         paymentDate: moment().format("YYYY-MM-DD"),
         price: parseInt(priceRef.current.value),
+        isRegular,
       });
     }
   };
