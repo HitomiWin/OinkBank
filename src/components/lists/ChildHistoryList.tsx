@@ -7,6 +7,7 @@ import { DocumentData, serverTimestamp } from "firebase/firestore";
 import moment from "moment";
 import { v4 as uuidv4 } from "uuid";
 
+import { useAuthContext } from "../../contexts/AuthContext";
 import useGetChild from "../../hooks/useGetChild";
 import { HistoryCard } from "../../components/cards/HistoryCard";
 import { Transaction } from "../../shared/interfaces";
@@ -20,15 +21,11 @@ export const ChildHistoryList: VFC = memo(() => {
   const uuid: string = uuidv4();
 
   const childQuery = useGetChild(id ?? "");
-
+  const { currentUser } = useAuthContext();
   const child = childQuery.data;
   const transactionsQuery = useAddTransactions(id ?? "");
-  const getTransactionsQuery = useGetTransactions(id ?? "");
-  const transActions = getTransactionsQuery.data?.docs.map(
-    (transaction: DocumentData) => {
-      return { id: transaction.id, ...transaction.data() };
-    }
-  );
+  const transActions = useGetTransactions(id ?? "");
+  // const transActions = transActions()
   const totalAmount = useGetTotalAmount(id ?? "");
 
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -39,12 +36,14 @@ export const ChildHistoryList: VFC = memo(() => {
       return;
     }
 
-    if (child) {
+    if (currentUser && child) {
       await transactionsQuery.addTransaction({
         id: uuid,
         created: serverTimestamp(),
         paymentDate: moment().format("YYYY-MM-DD"),
         price: parseInt(priceRef.current.value),
+        parent: currentUser.uid,
+        child: child.id,
         isRegular,
       });
     }
@@ -127,13 +126,13 @@ export const ChildHistoryList: VFC = memo(() => {
 
           <h4 className="text-center my-4">History of deposit or withdraw </h4>
           <Row>
-            {getTransactionsQuery.isError && (
-              <Alert variant="danger"> {getTransactionsQuery.error} </Alert>
+            {transActions.isError && (
+              <Alert variant="danger"> {transActions.error} </Alert>
             )}
-            {getTransactionsQuery.isLoading && <p>Loading...</p>}
+            {transActions.isLoading && <p>Loading...</p>}
 
-            {transActions && transActions.length ? (
-              transActions.map((transaction: Transaction) => (
+            {transActions && transActions.data && transActions.data.length ? (
+              transActions.data.map((transaction) => (
                 <HistoryCard key={transaction.id} transaction={transaction} />
               ))
             ) : (

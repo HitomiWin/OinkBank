@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { DocumentData, serverTimestamp } from "firebase/firestore";
 import moment from "moment";
+import { useAuthContext } from "../../contexts/AuthContext";
 import useAddTransactions from "../../hooks/useAddTransactions";
 import useEditChild from "../../hooks/useEditChild";
 import useGetTotalAmount from "../../hooks/useGetTotalAmount";
@@ -23,6 +24,7 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
   const totalAmount = useGetTotalAmount(child.id);
   const mutation = useEditChild();
   const isRegular = true;
+  const { currentUser } = useAuthContext();
   const addTransactionWeekly = async () => {
     const startWeeklyDate = moment(child.lastDate);
     const endWeeklyDate = moment().format("YYYY-MM-DD");
@@ -31,7 +33,7 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
     while (current.day(7 + 1).isBefore(endWeeklyDate)) {
       results.push(current.format("YYYY-MM-DD"));
     }
-    if (results.length > 0) {
+    if (currentUser && results.length > 0) {
       results.sort();
       results.map(async (result) => {
         await addTransaction({
@@ -39,6 +41,8 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
           created: serverTimestamp(),
           paymentDate: result,
           price: child.price,
+          parent: currentUser.uid,
+          child: child.id,
           isRegular,
         });
       });
@@ -57,13 +61,15 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
       current.add(1, "month");
       results.push(current.startOf("month").format("YYYY-MM-DD"));
     }
-    if (results && results.length > 0) {
+    if (currentUser && results && results.length > 0) {
       results.map(async (result) => {
         await addTransaction({
           id: uuidv4(),
           created: serverTimestamp(),
           paymentDate: result,
           price: child.price,
+          parent: currentUser.uid,
+          child: child.id,
           isRegular,
         });
       });

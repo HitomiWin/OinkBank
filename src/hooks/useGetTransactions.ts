@@ -1,12 +1,19 @@
-import { useFirestoreQuery } from "@react-query-firebase/firestore";
-import { collection, query, orderBy } from "firebase/firestore";
+import { useFirestoreQueryData } from "@react-query-firebase/firestore";
+import { collection, query, orderBy, where } from "firebase/firestore";
 import { db } from "../firebase";
+import { useAuthContext } from "../contexts/AuthContext";
 
 const useGetTransactions = (id: string) => {
-  const colTransactionsRef = collection(db, "children", id, "transactions");
+  const { currentUser } = useAuthContext();
+  const colTransactionsRef = collection(db, "transactions");
   const queryKey = ["transactions", id];
-  const queryRef = query(colTransactionsRef, orderBy("created", "desc"));
-  const getTransactionsQuery = useFirestoreQuery(
+  const queryRef = query(
+    colTransactionsRef,
+    where("parent", "==", currentUser?.uid),
+    where("child", "==", id),
+    orderBy("created", "desc")
+  );
+  const getTransactionsQuery = useFirestoreQueryData(
     queryKey,
     queryRef,
     {
