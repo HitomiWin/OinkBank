@@ -5,7 +5,7 @@ import { db } from "../firebase";
 const useGetTransactions = (id: string) => {
   const colTransactionsRef = collection(db, "children", id, "transactions");
   const queryKey = ["transactions", id];
-  const queryRef = query(colTransactionsRef, orderBy("paymentDate", "desc"));
+  const queryRef = query(colTransactionsRef, orderBy("created", "desc"));
   const getTransactionsQuery = useFirestoreQuery(
     queryKey,
     queryRef,

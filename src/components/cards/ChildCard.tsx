@@ -32,6 +32,7 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
       results.push(current.format("YYYY-MM-DD"));
     }
     if (results.length > 0) {
+      results.sort();
       results.map(async (result) => {
         await addTransaction({
           id: uuidv4(),
