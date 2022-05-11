@@ -13,19 +13,18 @@ import { HistoryCard } from "../../components/cards/HistoryCard";
 import useAddTransactions from "../../hooks/useAddTransactions";
 import useGetTransactions from "../../hooks/useGetTransactions";
 import useGetTotalAmount from "../../hooks/useGetTotalAmount";
+import useGetChildren from "../../hooks/useGetChildren";
 
 export const ChildHistoryList: VFC = memo(() => {
   const { id } = useParams();
   const priceRef = useRef<HTMLInputElement>(null);
   const uuid: string = uuidv4();
-
-  const childQuery = useGetChild(id ?? "");
+  const childrenQuery = useGetChildren();
+  const child: DocumentData = useGetChild(id ?? "");
   const { currentUser } = useAuthContext();
-  const child = childQuery.data;
   const transactionsQuery = useAddTransactions(id ?? "");
   const transActions = useGetTransactions(id ?? "");
   const totalAmount = useGetTotalAmount(id ?? "");
-
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const isRegular = false;
@@ -33,7 +32,6 @@ export const ChildHistoryList: VFC = memo(() => {
     if (!priceRef.current || !priceRef.current.value.length) {
       return;
     }
-
     if (currentUser && child) {
       await transactionsQuery.addTransaction({
         id: uuid,
@@ -41,17 +39,16 @@ export const ChildHistoryList: VFC = memo(() => {
         paymentDate: moment().format("YYYY-MM-DD"),
         price: parseInt(priceRef.current.value),
         parent: currentUser.uid,
-        child: child.id,
+        child: child.data.id,
         isRegular,
       });
     }
   };
 
-  if (childQuery.isError) {
-    return <Alert variant="warning">{childQuery.error}</Alert>;
+  if (child.isError) {
+    return <Alert variant="warning">{child.error}</Alert>;
   }
-
-  if (childQuery.isLoading) {
+  if (child.isLoading) {
     return (
       <div className="spinner-wrapper">
         <Spinner animation="grow" variant="secondary" />
@@ -75,7 +72,7 @@ export const ChildHistoryList: VFC = memo(() => {
               <FontAwesomeIcon icon={faUserCircle} color="#f0ad4e" size="3x" />
             </Col>
             <Col xs={{ span: 3 }} md={{ span: 2 }}>
-              <h3>{child.name} </h3>
+              <h3>{child.data.name}</h3>
             </Col>
             <Col xs={{ span: 4, offset: 2 }} md={{ span: 3, offset: 4 }}>
               <Col>

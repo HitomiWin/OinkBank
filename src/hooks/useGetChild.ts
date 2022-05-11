@@ -1,59 +1,12 @@
-import { useEffect, useState } from "react";
 import { db } from "../firebase";
-import { doc, onSnapshot, DocumentData } from "firebase/firestore";
+import { doc, DocumentData } from "firebase/firestore";
+import { useFirestoreDocumentData } from "@react-query-firebase/firestore";
 
 const useGetChild = (id: string) => {
-  const [isLoading, setIsLoading] = useState<boolean | null>(null);
-  const [isError, setIsError] = useState<boolean | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [data, setData] = useState<DocumentData | null>(null);
+  const ref = doc(db, "children", id);
+  const child = useFirestoreDocumentData<DocumentData>(["children", id], ref);
 
-  const getDoc = async () => {
-    setIsLoading(true);
-    setIsError(false);
-    setError(null);
-
-    // get document reference
-    const ref = doc(db, "children", id);
-
-    // attach listener
-    const unsubscribe = onSnapshot(
-      ref,
-      (snapshot) => {
-        if (!snapshot.exists()) {
-          setData(null);
-          setIsLoading(false);
-          return;
-        }
-
-        setData(snapshot.data());
-        setIsLoading(false);
-      },
-      (error) => {
-        setError(error.message);
-        setIsError(true);
-        setIsLoading(false);
-      }
-    );
-    return unsubscribe;
-  };
-  useEffect(() => {
-    getDoc();
-    return () => {
-      setIsLoading(null);
-      setIsError(null);
-      setError(null);
-      setData(null);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
-
-  return {
-    isLoading,
-    data,
-    error,
-    isError,
-  };
+  return child;
 };
 
 export default useGetChild;
