@@ -13,13 +13,11 @@ import { HistoryCard } from "../../components/cards/HistoryCard";
 import useAddTransactions from "../../hooks/useAddTransactions";
 import useGetTransactions from "../../hooks/useGetTransactions";
 import useGetTotalAmount from "../../hooks/useGetTotalAmount";
-import useGetChildren from "../../hooks/useGetChildren";
 
 export const ChildHistoryList: VFC = memo(() => {
   const { id } = useParams();
   const priceRef = useRef<HTMLInputElement>(null);
   const uuid: string = uuidv4();
-  const childrenQuery = useGetChildren();
   const child: DocumentData = useGetChild(id ?? "");
   const { currentUser } = useAuthContext();
   const transactionsQuery = useAddTransactions(id ?? "");
