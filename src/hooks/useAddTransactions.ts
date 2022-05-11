@@ -15,7 +15,7 @@ const useAddTransactions = (id: string) => {
     setIsSuccess(null);
     setIsLoading(true);
     try {
-      const ref = doc(db, "children", id, "transactions", transactionInfo.id);
+      const ref = doc(db, "transactions", transactionInfo.id);
       await setDoc(ref, transactionInfo);
       setIsSuccess(true);
       setIsSuccess(true);

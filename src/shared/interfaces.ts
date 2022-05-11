@@ -23,5 +23,7 @@ export interface Transaction {
   created?: FieldValue;
   paymentDate: string;
   price: number;
+  parent: string;
+  child: string;
   isRegular?: boolean;
 }
