@@ -30,7 +30,7 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
     const endWeeklyDate = moment().format("YYYY-MM-DD");
     let results: Array<string> = [];
     const current = startWeeklyDate.clone();
-    while (current.day(7 + 1).isBefore(endWeeklyDate)) {
+    while (current.day(7 + 1).isSameOrBefore(endWeeklyDate)) {
       results.push(current.format("YYYY-MM-DD"));
     }
     if (currentUser && results.length > 0) {
@@ -57,7 +57,7 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
     const endMonthlyDate = moment().startOf("month").format("YYYY-MM-DD");
     let results = [];
     const current = startMonthlyDate.clone();
-    while (current.isBefore(endMonthlyDate)) {
+    while (current.isSameOrBefore(endMonthlyDate)) {
       current.add(1, "month");
       results.push(current.startOf("month").format("YYYY-MM-DD"));
     }
