@@ -30,7 +30,7 @@ export const ChildHistoryList: VFC = memo(() => {
     if (!priceRef.current || !priceRef.current.value.length) {
       return;
     }
-    if (currentUser && child) {
+    if (currentUser && child && child.data) {
       await transactionsQuery.addTransaction({
         id: uuid,
         created: serverTimestamp(),
@@ -57,7 +57,7 @@ export const ChildHistoryList: VFC = memo(() => {
   if (transactionsQuery && priceRef.current) {
     priceRef.current.value = "";
   }
-  return transactionsQuery && child ? (
+  return transactionsQuery && child && child.data ? (
     <>
       <Row>
         <Col
@@ -135,5 +135,7 @@ export const ChildHistoryList: VFC = memo(() => {
         </Col>
       </Row>
     </>
-  ) : null;
+  ) : (
+    <p className="text-center">No Child</p>
+  );
 });
