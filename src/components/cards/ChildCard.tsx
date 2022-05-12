@@ -35,7 +35,7 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
     const endWeeklyDate = moment().format("YYYY-MM-DD");
     let results: Array<string> = [];
     const current = startWeeklyDate.clone();
-    while (current.day(7 + 4).isSameOrBefore(endWeeklyDate)) {
+    while (current.day(7 + 1).isSameOrBefore(endWeeklyDate)) {
       results.push(current.format("YYYY-MM-DD"));
     }
     if (currentUser && results.length > 0) {
