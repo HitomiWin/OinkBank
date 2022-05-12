@@ -14,7 +14,6 @@ import useAddTransactions from "../../hooks/useAddTransactions";
 import useEditChild from "../../hooks/useEditChild";
 import useGetTotalAmount from "../../hooks/useGetTotalAmount";
 import { v4 as uuidv4 } from "uuid";
-import { resourceLimits } from "worker_threads";
 
 interface Props {
   child: DocumentData;
