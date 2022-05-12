@@ -32,7 +32,6 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
   const isRegular = true;
   const { currentUser } = useAuthContext();
   const addTransactionWeekly = async () => {
-    console.log("addtranactionweekly", child.name);
     const startWeeklyDate = moment(child.lastDate);
     const endWeeklyDate = moment().format("YYYY-MM-DD");
     let results: Array<string> = [];
