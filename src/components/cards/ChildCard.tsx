@@ -64,7 +64,7 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
     const endMonthlyDate = moment().startOf("month").format("YYYY-MM-DD");
     let results = [];
     const current = startMonthlyDate.clone();
-    while (current.isSameOrBefore(endMonthlyDate)) {
+    while (current.isBefore(endMonthlyDate)) {
       current.add(1, "month");
       results.push(current.startOf("month").format("YYYY-MM-DD"));
     }
