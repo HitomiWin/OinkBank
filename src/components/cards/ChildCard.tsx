@@ -1,4 +1,4 @@
-import { memo, VFC, useEffect } from "react";
+import { memo, VFC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Row, Col, Button, Card } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,6 +20,11 @@ interface Props {
 }
 
 export const ChildCard: VFC<Props> = memo(({ child }) => {
+  const [isRegularDone, setIsRegularDone] = useState<boolean>(true);
+  const [regularLastDate, setRegularLastDate] = useState<string>(
+    child.lastDate
+  );
+  const stringToday = moment().format("YYYY-MM-DD");
   const { addTransaction } = useAddTransactions(child.id);
   const totalAmount = useGetTotalAmount(child.id);
   const mutation = useEditChild();
@@ -30,7 +35,7 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
     const endWeeklyDate = moment().format("YYYY-MM-DD");
     let results: Array<string> = [];
     const current = startWeeklyDate.clone();
-    while (current.day(7 + 1).isBefore(endWeeklyDate)) {
+    while (current.day(7 + 4).isSameOrBefore(endWeeklyDate)) {
       results.push(current.format("YYYY-MM-DD"));
     }
     if (currentUser && results.length > 0) {
@@ -51,13 +56,15 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
       });
     }
     results = [];
+    setIsRegularDone(true);
+    setRegularLastDate(stringToday);
   };
   const addTransactionMonthly = async () => {
     const startMonthlyDate = moment(child.lastDate).startOf("month");
     const endMonthlyDate = moment().startOf("month").format("YYYY-MM-DD");
     let results = [];
     const current = startMonthlyDate.clone();
-    while (current.isBefore(endMonthlyDate)) {
+    while (current.isSameOrBefore(endMonthlyDate)) {
       current.add(1, "month");
       results.push(current.startOf("month").format("YYYY-MM-DD"));
     }
@@ -78,18 +85,28 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
       });
     }
     results = [];
+    setRegularLastDate(stringToday);
+    setIsRegularDone(true);
   };
 
   useEffect(() => {
-    if (child && child.isPaused === false) {
-      if (child.isWeekly === true) {
-        addTransactionWeekly();
-      } else if (child.isWeekly === false) {
-        addTransactionMonthly();
+    if (regularLastDate !== stringToday) {
+      setIsRegularDone(false);
+    }
+  }, [regularLastDate, stringToday]);
+
+  useEffect(() => {
+    if (isRegularDone === false) {
+      if (child && child.isPaused === false) {
+        if (child.isWeekly === true) {
+          addTransactionWeekly();
+        } else if (child.isWeekly === false) {
+          addTransactionMonthly();
+        }
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [child.id, child.isPaused, child.isWeekly]);
+  }, [child.id, child.isPaused, child.isWeekly, isRegularDone]);
 
   const navigate = useNavigate();
 
