@@ -1,5 +1,6 @@
 import React, { useRef, useState, VFC, memo } from "react";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 import { DocumentData } from "firebase/firestore";
 import {
   Row,
@@ -39,7 +40,7 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
         : child.price,
       isWeekly,
       // if isWeekly changed value, todays date sets to lastDate
-      lastDate: child.lastDate,
+      lastDate: moment().format("YYYY-MM-DD"),
     });
     nameRef.current.value = "";
     priceRef.current.value = "";

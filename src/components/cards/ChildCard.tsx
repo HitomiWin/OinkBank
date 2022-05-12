@@ -14,6 +14,7 @@ import useAddTransactions from "../../hooks/useAddTransactions";
 import useEditChild from "../../hooks/useEditChild";
 import useGetTotalAmount from "../../hooks/useGetTotalAmount";
 import { v4 as uuidv4 } from "uuid";
+import { resourceLimits } from "worker_threads";
 
 interface Props {
   child: DocumentData;
@@ -31,10 +32,18 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
   const isRegular = true;
   const { currentUser } = useAuthContext();
   const addTransactionWeekly = async () => {
+    console.log("addtranactionweekly", child.name);
     const startWeeklyDate = moment(child.lastDate);
     const endWeeklyDate = moment().format("YYYY-MM-DD");
     let results: Array<string> = [];
     const current = startWeeklyDate.clone();
+    const mondayInCurrentWeek = current
+      .startOf("week")
+      .add(1, "days")
+      .format("YYYY-MM-DD");
+    if (startWeeklyDate.format("d") === "0") {
+      results.push(mondayInCurrentWeek);
+    }
     while (current.day(7 + 1).isSameOrBefore(endWeeklyDate)) {
       results.push(current.format("YYYY-MM-DD"));
     }
