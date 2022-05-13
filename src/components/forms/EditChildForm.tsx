@@ -1,4 +1,4 @@
-import React, { useRef, useState, VFC, memo } from "react";
+import React, { useRef, useState, VFC, memo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { DocumentData } from "firebase/firestore";
@@ -24,16 +24,23 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
   const nameRef = useRef<HTMLInputElement>(child.name);
   const priceRef = useRef<HTMLInputElement>(child.price);
   const [isWeekly, setIsWeekly] = useState<boolean>(child.isWeekly);
+  const [priceValue, setPriceValue] = useState<string>("");
+  const [nameValue, setNameValue] = useState<string>("");
   const mutation = useEditChild();
   const navigate = useNavigate();
+  useEffect(() => {
+    setIsWeekly(child.isWeekly);
+    setPriceValue(child.price);
+    setNameValue(child.name);
+  }, [child.isWeekly, child.price, child.name]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!nameRef.current || !priceRef.current) {
       return;
     }
 
-    mutation.mutate(id, {
+    await mutation.mutate(id, {
       name: nameRef.current.value.length ? nameRef.current.value : child.name,
       price: priceRef.current.value.length
         ? parseInt(priceRef.current.value)
@@ -44,7 +51,6 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
     });
     nameRef.current.value = "";
     priceRef.current.value = "";
-    setIsWeekly(isWeekly);
     navigate("/");
   };
 
@@ -77,7 +83,7 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
                       <Form.Control
                         type="text"
                         ref={nameRef}
-                        defaultValue={child.name}
+                        defaultValue={nameValue}
                       />
                     </Col>
                     <Col
@@ -103,7 +109,7 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
                         type="number"
                         min="1"
                         ref={priceRef}
-                        defaultValue={child.price}
+                        defaultValue={priceValue}
                       />
                     </Col>
                     <Col xs={2} className="d-flex">

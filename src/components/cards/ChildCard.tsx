@@ -199,6 +199,7 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
                       color="orange"
                       size="lg"
                       onClick={handleCardOnClick}
+                      className="hover-icon"
                     />
                   </Col>
                   <Col
@@ -211,6 +212,7 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
                       color="#f0ad4e"
                       size="lg"
                       onClick={handleEditOnClick}
+                      className="hover-icon"
                     />
                   </Col>
                 </Row>

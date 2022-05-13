@@ -60,3 +60,14 @@ h6 {
     background-color: #7070704d;
   }
 }
+
+.hover-icon {
+  opacity: 0.8;
+  transition: all 1s;
+}
+
+.hover-icon :hover {
+  cursor: pointer;
+  opacity: 1;
+  transform: scale(1.3);
+}
