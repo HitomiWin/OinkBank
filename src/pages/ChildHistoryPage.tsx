@@ -8,7 +8,7 @@ export const ChildHistoryPage = () => {
       <p className="back-button" onClick={() => navigate(-1)}>
         Back
       </p>
-      <ChildHistoryList />;
+      <ChildHistoryList />
     </>
   );
 };
