@@ -10,15 +10,15 @@ $theme-colors: (
 
 @import "bootstrap/scss/bootstrap";
 
-#root {
+body {
+  box-sizing: border-box;
+  margin: 0;
   background-color: #fcf7e4;
-  width: 100%;
-  min-height: 100vh;
-  min-width: 375px;
 }
 
 #App {
   position: relative;
+  min-width: 320px;
 }
 
 h1,
@@ -85,4 +85,23 @@ h6 {
 }
 .tooltip.bs-tooltip-right .tooltip-arrow::before {
   border-right-color: rgb(23, 23, 77) !important;
+}
+
+.user-circle-icon {
+  font-size: 48px;
+}
+
+@media only screen and (max-device-width: 480px) {
+  .user-circle-icon {
+    font-size: 40px;
+  }
+  h4,
+  h5 {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  h6,
+  p {
+    font-size: 12px;
+  }
 }

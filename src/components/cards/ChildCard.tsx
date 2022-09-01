@@ -190,7 +190,7 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
                     <FontAwesomeIcon
                       icon={faUserCircle}
                       color="#D7D4D4"
-                      size="3x"
+                      className="user-circle-icon"
                     />
                   </Col>
                   <Col xs={{ span: 3 }} className="align-self-center">
