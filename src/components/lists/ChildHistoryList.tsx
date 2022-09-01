@@ -67,7 +67,11 @@ export const ChildHistoryList: VFC = memo(() => {
         >
           <Row className="d-f align-items-center">
             <Col xs={{ span: 2, offset: 1 }} md={{ span: 2, offset: 1 }}>
-              <FontAwesomeIcon icon={faUserCircle} color="#f0ad4e" size="3x" />
+              <FontAwesomeIcon
+                icon={faUserCircle}
+                color="rgb(23, 23, 77)"
+                size="3x"
+              />
             </Col>
             <Col xs={{ span: 3 }} md={{ span: 2 }}>
               <h3>{child.data.name}</h3>
@@ -117,8 +121,8 @@ export const ChildHistoryList: VFC = memo(() => {
             </Card.Body>
           </Card>
 
-          <h4 className="text-center my-4">History of deposit or withdraw </h4>
-          <Row>
+          <h3 className="text-center my-4">History of deposit or withdraw </h3>
+          <Row className="justify-content-center">
             {transActions.isError && (
               <Alert variant="danger"> {transActions.error} </Alert>
             )}

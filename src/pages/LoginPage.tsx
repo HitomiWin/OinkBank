@@ -57,7 +57,7 @@ export const LoginPage: VFC = memo(() => {
               </Form>
             </Card.Body>
             <div className="text-center m-3 text-primary">
-              Are you not a member yet?
+              Are you not a member yet?&nbsp;&nbsp;
               <Link to="/signup" className="text-primary">
                 Signup
               </Link>
