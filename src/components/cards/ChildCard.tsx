@@ -1,6 +1,13 @@
 import { memo, VFC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Row, Col, Button, Card } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Button,
+  Card,
+  Tooltip,
+  OverlayTrigger,
+} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUserCircle,
@@ -189,19 +196,27 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
                   <Col xs={{ span: 3 }} className="align-self-center">
                     <h4>{child.name}</h4>
                   </Col>
-                  <Col
-                    xs={{ span: 1 }}
-                    md={{ span: 1, offset: 0 }}
-                    className="align-self-center"
+                  <OverlayTrigger
+                    key="right"
+                    placement="right"
+                    overlay={
+                      <Tooltip id={`tooltip-right`}>Deposit & Withdraw</Tooltip>
+                    }
                   >
-                    <FontAwesomeIcon
-                      icon={faArrowCircleRight}
-                      color="rgb(23, 23, 77)"
-                      size="lg"
-                      onClick={handleCardOnClick}
-                      className="hover-icon"
-                    />
-                  </Col>
+                    <Col
+                      xs={{ span: 1 }}
+                      md={{ span: 1, offset: 0 }}
+                      className="align-self-center"
+                    >
+                      <FontAwesomeIcon
+                        icon={faArrowCircleRight}
+                        color="rgb(23, 23, 77)"
+                        size="lg"
+                        onClick={handleCardOnClick}
+                        className="hover-icon"
+                      />
+                    </Col>
+                  </OverlayTrigger>
                   <Col
                     xs={{ span: 1, offset: 4 }}
                     md={{ span: 1, offset: 5 }}
