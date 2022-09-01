@@ -64,7 +64,6 @@ h6 {
 
 .hover-icon {
   opacity: 0.8;
-  transition: all 1s;
 
   &:hover {
     cursor: pointer;
@@ -80,4 +79,10 @@ h6 {
   & > p {
     margin-bottom: 8px;
   }
+}
+.tooltip-inner {
+  background-color: rgb(23, 23, 77);
+}
+.tooltip.bs-tooltip-right .tooltip-arrow::before {
+  border-right-color: rgb(23, 23, 77) !important;
 }

@@ -62,13 +62,13 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
           md={{ span: 8, offset: 2 }}
           lg={{ span: 6, offset: 3 }}
         >
-          <Card className="rounded-lg">
+          <Card className="rounded-lg p-3">
             <Card.Body>
               {mutation.isError && (
                 <Alert variant="danger">{mutation.error}</Alert>
               )}
               <Form onSubmit={handleSubmit}>
-                <Form.Group id="name" className="mb-3  text-secondary">
+                <Form.Group id="name" className="my-3  text-secondary">
                   <Row>
                     <Col
                       xs={{ span: 12, order: 2, offset: 0 }}
@@ -123,7 +123,7 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
                     <Col xs={3} md={2}>
                       <Form.Label>Frequency</Form.Label>
                     </Col>
-                    <ButtonGroup>
+                    <ButtonGroup className="mt-3">
                       <Col
                         xs={{ span: 2, offset: 0 }}
                         md={{ span: 2, offset: 2 }}
