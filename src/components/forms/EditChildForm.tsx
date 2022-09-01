@@ -56,7 +56,7 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
 
   return (
     <>
-      <Row>
+      <Row className="my-4">
         <Col
           xs={{ span: 12 }}
           md={{ span: 8, offset: 2 }}

@@ -169,7 +169,7 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
 
   return (
     <>
-      <Row className="my-2">
+      <Row className="my-4">
         <Col
           xs={{ span: 12 }}
           md={{ span: 8, offset: 2 }}
@@ -196,7 +196,7 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
                   >
                     <FontAwesomeIcon
                       icon={faArrowCircleRight}
-                      color="orange"
+                      color="rgb(23, 23, 77)"
                       size="lg"
                       onClick={handleCardOnClick}
                       className="hover-icon"
@@ -209,7 +209,7 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
                   >
                     <FontAwesomeIcon
                       icon={faEdit}
-                      color="#f0ad4e"
+                      color="#rgb(23, 23, 77)"
                       size="lg"
                       onClick={handleEditOnClick}
                       className="hover-icon"
