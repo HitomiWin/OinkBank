@@ -1,7 +1,5 @@
 import React, { memo, VFC, useRef } from "react";
 import { Row, Col, Card, Button, Form, Spinner, Alert } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import { DocumentData, serverTimestamp } from "firebase/firestore";
 import moment from "moment";
@@ -65,24 +63,12 @@ export const ChildHistoryList: VFC = memo(() => {
           md={{ span: 8, offset: 2 }}
           lg={{ span: 6, offset: 3 }}
         >
-          <Row className="d-f align-items-center">
-            <Col xs={{ span: 2, offset: 1 }} md={{ span: 2, offset: 1 }}>
-              <FontAwesomeIcon
-                icon={faUserCircle}
-                color="rgb(23, 23, 77)"
-                size="3x"
-              />
-            </Col>
-            <Col xs={{ span: 3 }} md={{ span: 2 }}>
+          <Row className="d-f align-items-center justify-content-between px-2">
+            <Col xs={{ span: 5 }}>
               <h3>{child.data.name}</h3>
             </Col>
-            <Col xs={{ span: 4, offset: 2 }} md={{ span: 3, offset: 4 }}>
-              <Col>
-                <h5>Total</h5>
-              </Col>
-              <Col>
-                <h4>{totalAmount} kr</h4>
-              </Col>
+            <Col xs={{ span: 5 }} className="text-end">
+              <h4>{totalAmount} kr</h4>
             </Col>
           </Row>
           <Card className="mt-3">

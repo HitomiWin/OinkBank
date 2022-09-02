@@ -11,8 +11,6 @@ import {
   ButtonGroup,
 } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { ChildQuery } from "../../shared/interfaces";
@@ -57,14 +55,14 @@ export const AddChildForm: VFC = memo(() => {
   }
   return (
     <>
-      <Row>
+      <Row className="mt-md-4 mt-sx-3 add-child-card-container">
         <Col
           xs={{ span: 12 }}
           md={{ span: 8, offset: 2 }}
           lg={{ span: 6, offset: 3 }}
         >
-          <Card className="rounded-lg">
-            <Card.Body>
+          <Card>
+            <Card.Body className="add-child-card  py-xs-2 px-xs-2 py-md-5 px-md-4 py-lg-5 px-lg-5">
               <Form onSubmit={handleSubmit}>
                 <Form.Group id="name" className="mb-3  text-secondary">
                   <Row>
@@ -78,16 +76,11 @@ export const AddChildForm: VFC = memo(() => {
                       xs={{ span: 12, order: 2, offset: 0 }}
                       md={{ span: 8, offset: 0, order: 2 }}
                     >
-                      <Form.Control type="text" ref={nameRef} required />
-                    </Col>
-                    <Col
-                      xs={{ span: 2, order: 1, offset: 9 }}
-                      md={{ span: 2, order: 3, offset: 0 }}
-                    >
-                      <FontAwesomeIcon
-                        icon={faUserCircle}
-                        color="#D7D4D4"
-                        size="3x"
+                      <Form.Control
+                        type="text"
+                        maxLength={10}
+                        ref={nameRef}
+                        required
                       />
                     </Col>
                   </Row>

@@ -186,17 +186,9 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
               >
                 <Row className="mb-2 name-edit-container justify-content-between">
                   <Col xs={{ span: 9 }}>
-                    <OverlayTrigger
-                      key="top"
-                      placement="top"
-                      overlay={
-                        <Tooltip id={`tooltip-top`}>Deposit & Withdraw</Tooltip>
-                      }
-                    >
-                      <h4 onClick={handleCardOnClick} className="hover-name">
-                        {child.name}
-                      </h4>
-                    </OverlayTrigger>
+                    <h4 onClick={handleCardOnClick} className="hover-name">
+                      {child.name}
+                    </h4>
                   </Col>
                   <Col
                     xs={{ span: 2 }}
@@ -231,14 +223,14 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
                 <Row className="mb-2">
                   <Col xs={{ span: 10 }} md={{ span: 7 }}>
                     {child.isPaused ? (
-                      <h6 className="text-danger">Paused</h6>
+                      <h6 className="text-light">Paused</h6>
                     ) : (
                       <h6>{`Next Allowance in ${diffDays} day(s) +${child.price} kr`}</h6>
                     )}
                   </Col>
                   <Col className="text-end">
                     <Button
-                      variant="danger"
+                      variant="light"
                       size="sm"
                       onClick={handlePauseOnClick}
                       className="text-info"

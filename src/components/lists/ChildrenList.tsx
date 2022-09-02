@@ -34,7 +34,7 @@ export const ChildrenList: VFC = memo(() => {
             navigate("/register-child");
           }}
         >
-          Add a child?
+          Add child
         </Button>
       </div>
     </>
@@ -42,12 +42,12 @@ export const ChildrenList: VFC = memo(() => {
     <div className="text-center">
       <Button
         variant="primary"
-        className="text-info  mt-2"
+        className="text-info mt-2"
         onClick={() => {
           navigate("/register-child");
         }}
       >
-        Add en child?
+        Add child
       </Button>
     </div>
   );
