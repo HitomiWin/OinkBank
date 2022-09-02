@@ -11,8 +11,6 @@ import {
   Alert,
   ButtonGroup,
 } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import useEditChild from "../../hooks/useEditChild";
 
 interface Props {
@@ -84,16 +82,6 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
                         type="text"
                         ref={nameRef}
                         defaultValue={nameValue}
-                      />
-                    </Col>
-                    <Col
-                      xs={{ span: 2, order: 1, offset: 9 }}
-                      md={{ span: 2, order: 3, offset: 0 }}
-                    >
-                      <FontAwesomeIcon
-                        icon={faUserCircle}
-                        color="#D7D4D4"
-                        size="3x"
                       />
                     </Col>
                   </Row>

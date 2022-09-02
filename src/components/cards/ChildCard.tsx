@@ -9,11 +9,7 @@ import {
   OverlayTrigger,
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUserCircle,
-  faEdit,
-  faArrowCircleRight,
-} from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faArrowCircleRight } from "@fortawesome/free-solid-svg-icons";
 import { DocumentData, serverTimestamp } from "firebase/firestore";
 import moment from "moment";
 import { useAuthContext } from "../../contexts/AuthContext";
@@ -125,7 +121,7 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
   const navigate = useNavigate();
 
   const handleCardOnClick = (
-    e: React.MouseEvent<SVGSVGElement, MouseEvent>
+    e: React.MouseEvent<HTMLHeadingElement, MouseEvent>
   ) => {
     e.stopPropagation();
     navigate(`/child-history/${child.id}`);
@@ -184,80 +180,57 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
         >
           <Card className="rounded-lg">
             <Card.Body>
-              <Col md={{ span: 12 }}>
-                <Row className="mb-2">
-                  <Col xs={{ span: 2 }}>
-                    <FontAwesomeIcon
-                      icon={faUserCircle}
-                      color="#D7D4D4"
-                      className="user-circle-icon"
-                    />
+              <Col
+                md={{ span: 12 }}
+                className="py-xs-2 px-xs-2 py-md-2 px-md-4 py-lg-3 px-lg-5"
+              >
+                <Row className="mb-2 name-edit-container justify-content-between">
+                  <Col xs={{ span: 9 }}>
+                    <h4 onClick={handleCardOnClick} className="hover-name">
+                      {child.name}
+                    </h4>
                   </Col>
-                  <Col xs={{ span: 3 }} className="align-self-center">
-                    <h4>{child.name}</h4>
-                  </Col>
-                  <OverlayTrigger
-                    key="right"
-                    placement="right"
-                    overlay={
-                      <Tooltip id={`tooltip-right`}>Deposit & Withdraw</Tooltip>
-                    }
-                  >
-                    <Col
-                      xs={{ span: 1 }}
-                      md={{ span: 1, offset: 0 }}
-                      className="align-self-center"
-                    >
-                      <FontAwesomeIcon
-                        icon={faArrowCircleRight}
-                        color="rgb(23, 23, 77)"
-                        size="lg"
-                        onClick={handleCardOnClick}
-                        className="hover-icon"
-                      />
-                    </Col>
-                  </OverlayTrigger>
                   <Col
-                    xs={{ span: 1, offset: 4 }}
-                    md={{ span: 1, offset: 5 }}
-                    className="align-self-start"
+                    xs={{ span: 2 }}
+                    md={{ span: 1 }}
+                    className="align-self-start edit-icon-container"
                   >
                     <FontAwesomeIcon
                       icon={faEdit}
                       color="#rgb(23, 23, 77)"
                       size="lg"
                       onClick={handleEditOnClick}
-                      className="hover-icon"
+                      className="hover-icon edit"
                     />
                   </Col>
                 </Row>
-                <Row className="mb-2 ">
-                  <Col xs={{ span: 3, offset: 2 }} md={{ span: 3, offset: 2 }}>
+                <Row className="mb-2 justify-content-between">
+                  <Col xs={{ span: 5 }}>
                     <h5>Total</h5>
                   </Col>
-                  <Col xs={{ span: 3, offset: 3 }} md={{ span: 3, offset: 2 }}>
-                    <h5>{totalAmount} kr</h5>
+                  <Col xs={{ span: 5 }}>
+                    <h5 className="text-end">{totalAmount} kr</h5>
                   </Col>
                 </Row>
-                <Row className="mb-2">
-                  <Col xs={{ span: 3, offset: 2 }} md={{ span: 3, offset: 2 }}>
+                <Row className="mb-2 justify-content-between">
+                  <Col xs={{ span: 5 }}>
                     {child.isWeekly ? <h6>Weekly</h6> : <h6>Monthly</h6>}
                   </Col>
-                  <Col xs={{ span: 3, offset: 3 }} md={{ span: 3, offset: 2 }}>
-                    <h6>{child.price} kr</h6>
+                  <Col xs={{ span: 5 }}>
+                    <h6 className="text-end">{child.price} kr</h6>
                   </Col>
                 </Row>
                 <Row className="mb-2">
-                  <Col xs={{ span: 10, offset: 2 }} md={{ span: 7, offset: 2 }}>
+                  <Col xs={{ span: 10 }} md={{ span: 7 }}>
                     {child.isPaused ? (
-                      <h6 className="text-danger">Paused</h6>
+                      <h6 className="text-light">Paused</h6>
                     ) : (
                       <h6>{`Next Allowance in ${diffDays} day(s) +${child.price} kr`}</h6>
                     )}
                   </Col>
-                  <Col className="text-center mt-3">
+                  <Col className="text-end">
                     <Button
-                      variant="danger"
+                      variant="light"
                       size="sm"
                       onClick={handlePauseOnClick}
                       className="text-info"
