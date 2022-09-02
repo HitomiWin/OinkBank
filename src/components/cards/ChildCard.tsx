@@ -1,15 +1,8 @@
 import { memo, VFC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Row,
-  Col,
-  Button,
-  Card,
-  Tooltip,
-  OverlayTrigger,
-} from "react-bootstrap";
+import { Row, Col, Button, Card } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faArrowCircleRight } from "@fortawesome/free-solid-svg-icons";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { DocumentData, serverTimestamp } from "firebase/firestore";
 import moment from "moment";
 import { useAuthContext } from "../../contexts/AuthContext";
