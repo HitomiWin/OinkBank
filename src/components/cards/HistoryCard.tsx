@@ -15,7 +15,7 @@ export const HistoryCard: VFC<Props> = memo(({ transaction }) => {
   return (
     transaction && (
       <>
-        <Col md={6} className="mt-2">
+        <Col xs={12} className="mt-2">
           <Row className="history-list justify-content-between">
             <Col xs={6} className="text-secondary">
               {paymentDate}
