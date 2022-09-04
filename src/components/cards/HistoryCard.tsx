@@ -1,5 +1,5 @@
 import { memo, VFC } from "react";
-import { Col } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { DocumentData } from "firebase/firestore";
 
 interface Props {
@@ -15,11 +15,13 @@ export const HistoryCard: VFC<Props> = memo(({ transaction }) => {
   return (
     transaction && (
       <>
-        <Col md={6} lg={4} className="mt-2">
-          <div className="history-list">
-            <p className="text-secondary">{paymentDate}</p>
-            <p>{transaction.price.toString()}kr</p>
-          </div>
+        <Col md={6} className="mt-2">
+          <Row className="history-list justify-content-between">
+            <Col xs={6} className="text-secondary">
+              {paymentDate}
+            </Col>
+            <Col>{transaction.price.toString()}kr</Col>
+          </Row>
         </Col>
       </>
     )
