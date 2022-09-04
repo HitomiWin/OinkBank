@@ -103,18 +103,16 @@ export const ChildHistoryList: VFC = memo(() => {
                 <p> Deposit or withdraw amount &nbsp;</p>
                 <OverlayTrigger
                   trigger="click"
-                  key="right"
-                  placement="right"
+                  key="top"
+                  placement="top"
                   overlay={popover}
                 >
-                  <p>
-                    <FontAwesomeIcon
-                      icon={faInfoCircle}
-                      color="#rgb(23, 23, 77)"
-                      size="sm"
-                      className="hover-icon circle-info"
-                    />
-                  </p>
+                  <FontAwesomeIcon
+                    icon={faInfoCircle}
+                    color="#rgb(23, 23, 77)"
+                    size="sm"
+                    className="hover-icon circle-info"
+                  />
                 </OverlayTrigger>
               </Card.Title>
               <Form onSubmit={handleOnSubmit}>
@@ -148,7 +146,7 @@ export const ChildHistoryList: VFC = memo(() => {
             <h3 className="text-center my-4">
               History of deposit or withdraw{" "}
             </h3>
-            <Row className="justify-content-center">
+            <Row className="justify-content-between">
               {transActions.isError && (
                 <Alert variant="danger"> {transActions.error} </Alert>
               )}
