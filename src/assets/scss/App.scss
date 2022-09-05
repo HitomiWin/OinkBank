@@ -13,6 +13,7 @@ $theme-colors: (
 body {
   box-sizing: border-box;
   margin: 0;
+  padding: 0;
   background-color: #fcf7e4;
 }
 
@@ -79,11 +80,10 @@ h6 {
     color: #b38614;
   }
 }
-.history-list {
-  display: flex;
-  justify-content: space-around;
-  border-bottom: 1px solid black;
-  & > p {
-    margin-bottom: 8px;
-  }
-}
+// .history-list {
+//   display: flex;
+//   justify-content: space-around;
+//   & > p {
+//     margin-bottom: 8px;
+//   }
+// }
