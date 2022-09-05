@@ -82,7 +82,7 @@ export const ChildHistoryList: VFC = memo(() => {
     <Container>
       <Row className="justify-content-center">
         <Col xs={{ span: 12 }} md={{ span: 8 }} lg={{ span: 6 }}>
-          <Row className="d-f align-items-center justify-content-between py-0 px-lg-5 m-0 bg-info rounded">
+          <Row className="d-f align-items-center justify-content-between py-0 px-lg-5 px-md-3 m-0 bg-info rounded">
             <Col xs={{ span: 5 }}>
               <h3 className="mt-3">{child.data.name}</h3>
             </Col>
@@ -90,8 +90,8 @@ export const ChildHistoryList: VFC = memo(() => {
               <h4 className="mt-3">{totalAmount} kr</h4>
             </Col>
           </Row>
-          <div className="mt-3 px-lg-5 py-3 bg-info rounded">
-            <Card.Body className="pb-5">
+          <div className="mt-3 px-lg-5 px-md-3 py-3 bg-info rounded">
+            <Card.Body className="pb-4 mb-4 deposit-wrapper">
               {transactionsQuery.isError && (
                 <Alert variant="danger"> {transactionsQuery.error} </Alert>
               )}
@@ -114,37 +114,28 @@ export const ChildHistoryList: VFC = memo(() => {
                 </OverlayTrigger>
               </Card.Title>
               <Form onSubmit={handleOnSubmit}>
-                <Row>
-                  <Col xs={12}>
-                    <Form.Control
-                      type="number"
-                      placeholder="Enter amount ex. 10, -10"
-                      ref={priceRef}
-                    />
-                  </Col>
-                  <div className="d-flex p-md-0 m-xs-2">
-                    <Col
-                      xs={{ span: 2, offset: 9 }}
-                      md={{ span: 2, offset: 10 }}
-                      className="mt-4"
+                <div>
+                  <Form.Control
+                    type="number"
+                    placeholder="Enter amount ex. 10, -10"
+                    ref={priceRef}
+                  />
+                  <div className="d-flex justify-content-end my-3">
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      disabled={transactionsQuery.isLoading === true}
+                      className="text-info ml-auto"
                     >
-                      <Button
-                        type="submit"
-                        variant="primary"
-                        disabled={transactionsQuery.isLoading === true}
-                        className="text-info text-end"
-                      >
-                        Save
-                      </Button>
-                    </Col>
+                      Save
+                    </Button>
                   </div>
-                </Row>
+                </div>
               </Form>
             </Card.Body>
-            <hr />
             <div>
               <h4 className="text-center">History of deposit or withdraw </h4>
-              <div>
+              <div className="px-2">
                 {transActions.isError && (
                   <Alert variant="danger"> {transActions.error} </Alert>
                 )}

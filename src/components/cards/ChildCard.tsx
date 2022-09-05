@@ -217,14 +217,14 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
                 <Row className="mb-2">
                   <Col xs={{ span: 10 }} md={{ span: 7 }}>
                     {child.isPaused ? (
-                      <h6 className="text-light">Paused</h6>
+                      <h6 className="text-danger">Paused</h6>
                     ) : (
                       <h6>{`Next Allowance in ${diffDays} day(s) +${child.price} kr`}</h6>
                     )}
                   </Col>
                   <Col className="text-end">
                     <Button
-                      variant="light"
+                      variant="danger"
                       size="sm"
                       onClick={handlePauseOnClick}
                       className="text-info"

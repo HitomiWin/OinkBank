@@ -80,10 +80,9 @@ h6 {
     color: #b38614;
   }
 }
-// .history-list {
-//   display: flex;
-//   justify-content: space-around;
-//   & > p {
-//     margin-bottom: 8px;
-//   }
-// }
+.deposit-wrapper {
+  border-bottom: solid 1px #80808024;
+}
+.history-list {
+  border-bottom: solid 1px #8080805c;
+}
