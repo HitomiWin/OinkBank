@@ -80,12 +80,8 @@ export const ChildHistoryList: VFC = memo(() => {
   }
   return transactionsQuery && child && child.data ? (
     <Container>
-      <Row>
-        <Col
-          xs={{ span: 12 }}
-          md={{ span: 8, offset: 2 }}
-          lg={{ span: 6, offset: 3 }}
-        >
+      <Row className="justify-content-center">
+        <Col xs={{ span: 12 }} md={{ span: 8 }} lg={{ span: 6 }}>
           <Row className="d-f align-items-center justify-content-between py-0 px-lg-5 m-0 bg-info rounded">
             <Col xs={{ span: 5 }}>
               <h3 className="mt-3">{child.data.name}</h3>
@@ -94,7 +90,7 @@ export const ChildHistoryList: VFC = memo(() => {
               <h4 className="mt-3">{totalAmount} kr</h4>
             </Col>
           </Row>
-          <div className="mt-3 px-lg-5 bg-info rounded">
+          <div className="mt-3 px-lg-5 py-3 bg-info rounded">
             <Card.Body className="pb-5">
               {transactionsQuery.isError && (
                 <Alert variant="danger"> {transactionsQuery.error} </Alert>
@@ -110,7 +106,7 @@ export const ChildHistoryList: VFC = memo(() => {
                   <p>
                     <FontAwesomeIcon
                       icon={faInfoCircle}
-                      color="#rgb(23, 23, 77)"
+                      color="rgb(24, 24, 82)"
                       size="sm"
                       className="hover-icon circle-info"
                     />
@@ -146,21 +142,28 @@ export const ChildHistoryList: VFC = memo(() => {
               </Form>
             </Card.Body>
             <hr />
-            <h4 className="text-center">History of deposit or withdraw </h4>
-            <Row className="justify-content-between">
-              {transActions.isError && (
-                <Alert variant="danger"> {transActions.error} </Alert>
-              )}
-              {transActions.isLoading && <p>Loading...</p>}
+            <div>
+              <h4 className="text-center">History of deposit or withdraw </h4>
+              <div>
+                {transActions.isError && (
+                  <Alert variant="danger"> {transActions.error} </Alert>
+                )}
+                {transActions.isLoading && <p>Loading...</p>}
 
-              {transActions && transActions.data && transActions.data.length ? (
-                transActions.data.map((transaction) => (
-                  <HistoryCard key={transaction.id} transaction={transaction} />
-                ))
-              ) : (
-                <h4 className="text-center my-4">No history</h4>
-              )}
-            </Row>
+                {transActions &&
+                transActions.data &&
+                transActions.data.length ? (
+                  transActions.data.map((transaction) => (
+                    <HistoryCard
+                      key={transaction.id}
+                      transaction={transaction}
+                    />
+                  ))
+                ) : (
+                  <h4 className="text-center my-4">No history</h4>
+                )}
+              </div>
+            </div>
           </div>
         </Col>
       </Row>
