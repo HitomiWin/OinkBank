@@ -1,15 +1,7 @@
 import React, { useRef, useState, VFC, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { serverTimestamp } from "firebase/firestore";
-import {
-  Row,
-  Col,
-  Form,
-  Button,
-  Card,
-  Alert,
-  ButtonGroup,
-} from "react-bootstrap";
+import { Row, Col, Form, Button, Card, Alert } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
 import { useAuthContext } from "../../contexts/AuthContext";
@@ -110,36 +102,17 @@ export const AddChildForm: VFC = memo(() => {
                     <Col xs={12}>
                       <Form.Label>Frequency</Form.Label>
                     </Col>
-                    <ButtonGroup>
-                      <Col
-                        xs={{ span: 2, offset: 0 }}
-                        md={{ span: 2, offset: 2 }}
-                      >
-                        <Button
-                          className={`frequency-button ${
-                            isWeekly ? "active" : "inactive"
-                          }`}
-                          onClick={() => setIsWeekly(!isWeekly)}
-                          disabled={isWeekly}
-                        >
-                          Weekly
-                        </Button>
-                      </Col>
-                      <Col
-                        xs={{ span: 2, offset: 6 }}
-                        md={{ span: 2, offset: 3 }}
-                      >
-                        <Button
-                          className={`frequency-button ${
-                            !isWeekly ? "active" : "inactive"
-                          }`}
-                          onClick={() => setIsWeekly(!isWeekly)}
-                          disabled={!isWeekly}
-                        >
-                          Monthly
-                        </Button>
-                      </Col>
-                    </ButtonGroup>
+                    <Form.Select
+                      aria-label="frequency select"
+                      onChange={(e) =>
+                        e.target.value === "1"
+                          ? setIsWeekly(true)
+                          : setIsWeekly(false)
+                      }
+                    >
+                      <option value="1">Weekly</option>
+                      <option value="2">Monthly</option>
+                    </Form.Select>
                   </Row>
                 </Form.Group>
                 <Row>

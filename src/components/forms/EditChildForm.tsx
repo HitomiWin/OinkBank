@@ -2,15 +2,7 @@ import React, { useRef, useState, VFC, memo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { DocumentData } from "firebase/firestore";
-import {
-  Row,
-  Col,
-  Form,
-  Button,
-  Card,
-  Alert,
-  ButtonGroup,
-} from "react-bootstrap";
+import { Row, Col, Form, Button, Card, Alert } from "react-bootstrap";
 import useEditChild from "../../hooks/useEditChild";
 
 interface Props {
@@ -70,13 +62,13 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
                   <Row>
                     <Col
                       xs={{ span: 12, order: 2, offset: 0 }}
-                      md={{ span: 2, order: 1, offset: 0 }}
+                      md={{ span: 3, order: 1, offset: 0 }}
                     >
                       <Form.Label>Name</Form.Label>
                     </Col>
                     <Col
                       xs={{ span: 12, order: 2, offset: 0 }}
-                      md={{ span: 8, offset: 0, order: 2 }}
+                      md={{ span: 7, offset: 0, order: 2 }}
                     >
                       <Form.Control
                         type="text"
@@ -89,7 +81,7 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
 
                 <Form.Group id="price" className="mb-3  text-secondary">
                   <Row>
-                    <Col xs={12} md={2}>
+                    <Col xs={12} md={3}>
                       <Form.Label>Deposit</Form.Label>
                     </Col>
                     <Col>
@@ -108,48 +100,37 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
 
                 <Form.Group id="frequency" className="mb-3 text-secondary">
                   <Row>
-                    <Col xs={12}>
+                    <Col
+                      xs={{ span: 12, order: 2, offset: 0 }}
+                      md={{ span: 3, order: 1, offset: 0 }}
+                    >
                       <Form.Label>Frequency</Form.Label>
                     </Col>
-                    <ButtonGroup className="mt-3">
-                      <Col
-                        xs={{ span: 2, offset: 0 }}
-                        md={{ span: 2, offset: 2 }}
+                    <Col
+                      xs={{ span: 12, order: 2, offset: 0 }}
+                      md={{ span: 7, offset: 0, order: 2 }}
+                    >
+                      <Form.Select
+                        aria-label="frequency select"
+                        onChange={(e) =>
+                          e.target.value === "1"
+                            ? setIsWeekly(true)
+                            : setIsWeekly(false)
+                        }
+                        defaultValue={isWeekly ? "1" : "2"}
                       >
-                        <Button
-                          className={`btn frequency-button ${
-                            isWeekly ? "active" : "inactive"
-                          }`}
-                          onClick={() => setIsWeekly(!isWeekly)}
-                          disabled={isWeekly}
-                        >
-                          Weekly
-                        </Button>
-                      </Col>
-                      <Col
-                        xs={{ span: 2, offset: 6 }}
-                        md={{ span: 2, offset: 3 }}
-                        lg={{ span: 2, offset: 4 }}
-                      >
-                        <Button
-                          className={`btn frequency-button ${
-                            !isWeekly ? "active" : "inactive"
-                          }`}
-                          onClick={() => setIsWeekly(!isWeekly)}
-                          disabled={!isWeekly}
-                        >
-                          Monthly
-                        </Button>
-                      </Col>
-                    </ButtonGroup>
+                        <option value="1">Weekly</option>
+                        <option value="2">Monthly</option>
+                      </Form.Select>
+                    </Col>
                   </Row>
                 </Form.Group>
                 <Row>
-                  <Col xs={{ offset: 8 }}>
+                  <Col className="text-center">
                     <Button
                       disabled={mutation.isLoading}
                       type="submit"
-                      className="text-info mt-1"
+                      className="text-info mt-1 px-5"
                     >
                       Save
                     </Button>
