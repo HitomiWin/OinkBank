@@ -72,7 +72,7 @@ export const SignupPage: VFC = memo(() => {
                     required
                   />
                 </Form.Group>
-                <div className="text-end pt-3">
+                <div className="text-start pt-3">
                   <Button
                     disabled={loading}
                     type="submit"
