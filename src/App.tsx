@@ -60,5 +60,5 @@ export const App: VFC = memo(() => {
       </Container>
       <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
     </>
-  );
+  )
 });

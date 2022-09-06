@@ -65,5 +65,5 @@ export const ChildrenList: VFC = memo(() => {
         </Button>
       </div>
     </>
-  );
-});
+  )
+})
