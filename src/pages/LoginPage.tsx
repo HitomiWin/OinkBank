@@ -52,7 +52,7 @@ export const LoginPage: VFC = memo(() => {
                   <Form.Label>Password</Form.Label>
                   <Form.Control type="password" ref={passwordRef} required />
                 </Form.Group>
-                <div className="text-end pt-3">
+                <div className="text-start pt-3">
                   <Button
                     disabled={loading}
                     className="text-info"
