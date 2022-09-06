@@ -66,7 +66,7 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
                 <Alert variant="danger">{mutation.error}</Alert>
               )}
               <Form onSubmit={handleSubmit}>
-                <Form.Group id="name" className="my-3  text-secondary">
+                <Form.Group id="name" className="mb-3  text-secondary">
                   <Row>
                     <Col
                       xs={{ span: 12, order: 2, offset: 0 }}
@@ -108,7 +108,7 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
 
                 <Form.Group id="frequency" className="mb-3 text-secondary">
                   <Row>
-                    <Col xs={3} md={2}>
+                    <Col xs={12}>
                       <Form.Label>Frequency</Form.Label>
                     </Col>
                     <ButtonGroup className="mt-3">
@@ -117,7 +117,7 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
                         md={{ span: 2, offset: 2 }}
                       >
                         <Button
-                          className={`frequency-button ${
+                          className={`btn frequency-button ${
                             isWeekly ? "active" : "inactive"
                           }`}
                           onClick={() => setIsWeekly(!isWeekly)}
@@ -129,9 +129,10 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
                       <Col
                         xs={{ span: 2, offset: 6 }}
                         md={{ span: 2, offset: 3 }}
+                        lg={{ span: 2, offset: 4 }}
                       >
                         <Button
-                          className={`frequency-button ${
+                          className={`btn frequency-button ${
                             !isWeekly ? "active" : "inactive"
                           }`}
                           onClick={() => setIsWeekly(!isWeekly)}

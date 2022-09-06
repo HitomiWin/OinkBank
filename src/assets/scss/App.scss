@@ -27,7 +27,8 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+p {
   margin-bottom: 16px;
   color: rgb(23, 23, 77);
 }
@@ -52,17 +53,19 @@ h6 {
   }
 }
 
-.frequency-button {
+.btn.frequency-button {
   &.active {
     color: white;
     border: white;
     background-color: #b38614;
   }
-
   &.inactive {
     color: white;
     border: white;
     background-color: #7070704d;
+    &:hover {
+      background-color: rgb(23, 23, 77);
+    }
   }
 }
 
@@ -80,9 +83,45 @@ h6 {
     color: #b38614;
   }
 }
-.deposit-wrapper {
-  border-bottom: solid 1px #80808024;
+.tooltip-inner {
+  background-color: rgb(23, 23, 77);
 }
-.history-list {
-  border-bottom: solid 1px #8080805c;
+.tooltip.bs-tooltip-right .tooltip-arrow::before {
+  border-right-color: rgb(23, 23, 77) !important;
+}
+
+.user-circle-icon {
+  font-size: 48px;
+}
+
+.flowing {
+  white-space: nowrap;
+  overflow: hidden;
+  animation: flowing-anim 3s forwards linear;
+}
+
+@keyframes flowing-anim {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-device-width: 480px) {
+  h3,
+  h4,
+  h5 {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  h6,
+  p {
+    font-size: 12px;
+  }
+  .flowing,
+  .no-child-text {
+    font-size: 12px;
+  }
 }

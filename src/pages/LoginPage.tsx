@@ -2,6 +2,7 @@ import React, { useRef, useState, VFC, memo } from "react";
 import { Row, Col, Form, Button, Card, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../contexts/AuthContext";
+import { Wellcome } from "../pages/partials/Wellcome";
 
 export const LoginPage: VFC = memo(() => {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -30,7 +31,8 @@ export const LoginPage: VFC = memo(() => {
 
   return (
     <>
-      <Row>
+      <Wellcome />
+      <Row className="py-3">
         <Col xs={12} md={{ span: 8, offset: 2 }} lg={{ span: 6, offset: 3 }}>
           <Card className="rounded-lg px-3">
             <Card.Body>
@@ -50,13 +52,18 @@ export const LoginPage: VFC = memo(() => {
                   <Form.Label>Password</Form.Label>
                   <Form.Control type="password" ref={passwordRef} required />
                 </Form.Group>
-
-                <Button disabled={loading} className="text-info" type="submit">
-                  Log In
-                </Button>
+                <div className="text-end pt-3">
+                  <Button
+                    disabled={loading}
+                    className="text-info"
+                    type="submit"
+                  >
+                    Log In
+                  </Button>
+                </div>
               </Form>
             </Card.Body>
-            <div className="text-center m-3 text-primary">
+            <div className="text-center mb-3 text-primary">
               Are you not a member yet?&nbsp;&nbsp;
               <Link to="/signup" className="text-primary">
                 Signup

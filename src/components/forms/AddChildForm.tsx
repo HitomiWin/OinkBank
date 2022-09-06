@@ -55,14 +55,14 @@ export const AddChildForm: VFC = memo(() => {
   }
   return (
     <>
-      <Row className="mt-md-4 mt-sx-3 add-child-card-container">
+      <Row className="mt-3">
         <Col
           xs={{ span: 12 }}
           md={{ span: 8, offset: 2 }}
           lg={{ span: 6, offset: 3 }}
         >
-          <Card>
-            <Card.Body className="add-child-card  py-xs-2 px-xs-2 py-md-5 px-md-4 py-lg-5 px-lg-5">
+          <Card className="rounded-lg p-3">
+            <Card.Body>
               <Form onSubmit={handleSubmit}>
                 <Form.Group id="name" className="mb-3  text-secondary">
                   <Row>
