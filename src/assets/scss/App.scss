@@ -41,6 +41,14 @@ p {
   align-items: center;
 }
 
+.deposit-wrapper {
+  border-bottom: solid 1px #8080802e;
+}
+
+.history-list {
+  border-bottom: solid 1px #8080804d;
+}
+
 .dropdown-item.active,
 .dropdown-item:active {
   background-color: rgb(23, 23, 77);
