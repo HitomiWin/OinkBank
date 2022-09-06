@@ -145,11 +145,7 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
                   </Row>
                 </Form.Group>
                 <Row>
-                  <Col
-                    xs={{ span: 2, offset: 8 }}
-                    md={{ span: 2, offset: 9 }}
-                    lg={{ span: 2, offset: 10 }}
-                  >
+                  <Col xs={{ offset: 8 }}>
                     <Button
                       disabled={mutation.isLoading}
                       type="submit"
