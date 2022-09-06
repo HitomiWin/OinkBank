@@ -1,9 +1,9 @@
 export const Wellcome = () => {
   return (
-    <div>
-      <h3 className="flowing text-center">
+    <div className="my-md-5 my-3">
+      <h2 className="flowing text-center">
         Oink Bank makes it easy to track allowances for kids!
-      </h3>
+      </h2>
     </div>
   );
 };

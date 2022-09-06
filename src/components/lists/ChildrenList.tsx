@@ -23,7 +23,7 @@ export const ChildrenList: VFC = memo(() => {
 
   return childrenQuery.data && childrenQuery.data.length ? (
     <>
-      <h3 className="text-center">Children</h3>
+      <h2 className="text-center my-md-4 my-3">Children</h2>
       {childrenQuery.data.map((child) => (
         <ChildCard key={child.id} child={child} />
       ))}
@@ -44,16 +44,13 @@ export const ChildrenList: VFC = memo(() => {
       <div>
         <Wellcome />
         <div>
-          <h5 className="text-primary text-center no-child-text my-2">
+          <p className="text-primary text-center no-child-text my-5">
             Simply choose the abount to deposit and how often the deposit should
-            reoccur.
-            <h5 className="text-primary text-center my-3">
-              Start now by adding a child below!
-            </h5>
-          </h5>
+            reoccur.Start now by adding a child below!
+          </p>
         </div>
       </div>
-      <div className="text-center">
+      <div className="text-center my-2">
         <Button
           variant="primary"
           className="text-info  mt-2"

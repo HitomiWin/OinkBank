@@ -81,10 +81,15 @@ export const ChildHistoryList: VFC = memo(() => {
   return transactionsQuery && child && child.data ? (
     <Container>
       <Row className="justify-content-center">
-        <Col xs={{ span: 12 }} md={{ span: 8 }} lg={{ span: 6 }}>
+        <Col
+          xs={{ span: 12 }}
+          md={{ span: 8 }}
+          lg={{ span: 6 }}
+          className="py-2"
+        >
           <Row className="d-f align-items-center justify-content-between py-0 px-lg-5 px-md-3 m-0 bg-info rounded">
             <Col xs={{ span: 5 }}>
-              <h3 className="mt-3">{child.data.name}</h3>
+              <h2 className="my-3">{child.data.name}</h2>
             </Col>
             <Col xs={{ span: 5 }} className="text-end">
               <h4 className="mt-3">{totalAmount} kr</h4>
@@ -152,7 +157,9 @@ export const ChildHistoryList: VFC = memo(() => {
                     />
                   ))
                 ) : (
-                  <h4 className="text-center my-4">No history</h4>
+                  <div>
+                    <p className="text-center my-4">No history</p>
+                  </div>
                 )}
               </div>
             </div>

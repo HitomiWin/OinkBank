@@ -1,5 +1,5 @@
 import React, { useRef, useState, VFC, memo } from "react";
-import { Row, Col, Form, Button, Card, Alert } from "react-bootstrap";
+import { Row, Col, Form, Button, Card } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../contexts/AuthContext";
 import { Wellcome } from "../pages/partials/Wellcome";
@@ -23,7 +23,11 @@ export const LoginPage: VFC = memo(() => {
         await login(emailRef.current.value, passwordRef.current.value);
         navigate("/");
       } catch (e: any) {
-        setError(e.message);
+        if (e.code.includes("auth")) {
+          setError("Bad Credentials.");
+        } else {
+          setError("Something went wrong");
+        }
         setLoading(false);
       }
     }
@@ -40,7 +44,7 @@ export const LoginPage: VFC = memo(() => {
                 Log In
               </Card.Title>
 
-              {error && <Alert variant="danger">{error}</Alert>}
+              {error && <p className="text-danger text-center">{error}</p>}
 
               <Form onSubmit={handleSubmit}>
                 <Form.Group id="email" className="mb-3 text-secondary">

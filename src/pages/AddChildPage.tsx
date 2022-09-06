@@ -9,7 +9,7 @@ export const AddChildPage: VFC = memo(() => {
       <p className="back-button" onClick={() => navigate(-1)}>
         Back
       </p>
-      <h3 className="text-center">Add Child</h3>
+      <h2 className="text-center my-md-4 my-3">Add Child</h2>
       <AddChildForm />
     </>
   );

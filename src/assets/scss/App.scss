@@ -29,7 +29,6 @@ h4,
 h5,
 h6,
 p {
-  margin-bottom: 16px;
   color: rgb(23, 23, 77);
 }
 
@@ -102,34 +101,34 @@ p {
   font-size: 48px;
 }
 
-.flowing {
-  white-space: nowrap;
-  overflow: hidden;
-  animation: flowing-anim 3s forwards linear;
-}
+// .flowing {
+//   white-space: nowrap;
+//   overflow: hidden;
+//   animation: flowing-anim 3s forwards linear;
+// }
 
-@keyframes flowing-anim {
-  0% {
-    width: 0%;
-  }
-  100% {
-    width: 100%;
-  }
-}
+// @keyframes flowing-anim {
+//   0% {
+//     width: 0%;
+//   }
+//   100% {
+//     width: 100%;
+//   }
+// }
 
 @media only screen and (max-device-width: 480px) {
-  h3,
-  h4,
-  h5 {
-    font-size: 16px;
-    font-weight: 500;
-  }
-  h6,
-  p {
-    font-size: 12px;
-  }
-  .flowing,
-  .no-child-text {
-    font-size: 12px;
-  }
+  // h3,
+  // h4,
+  // h5 {
+  //   font-size: 16px;
+  //   font-weight: 500;
+  // }
+  // h6,
+  // p {
+  //   font-size: 12px;
+  // }
+  // .flowing,
+  // .no-child-text {
+  //   font-size: 12px;
+  // }
 }
