@@ -27,7 +27,7 @@ export const EditChildPage: VFC = memo(() => {
       <p className="back-button" onClick={() => navigate(-1)}>
         Back
       </p>
-      <h3 className="text-center">Edit {childQuery.data.name} </h3>
+      <h2 className="text-center">Edit {childQuery.data.name} </h2>
       <EditChildForm id={id ?? ""} child={childQuery.data} />
     </>
   ) : null;
