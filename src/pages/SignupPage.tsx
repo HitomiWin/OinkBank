@@ -1,5 +1,5 @@
 import React, { useRef, useState, VFC, memo } from "react";
-import { Row, Col, Form, Button, Card, Alert } from "react-bootstrap";
+import { Row, Col, Form, Button, Card } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../contexts/AuthContext";
 import { Wellcome } from "./partials/Wellcome";
