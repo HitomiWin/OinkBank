@@ -35,7 +35,7 @@ export const ChildCard: VFC<Props> = memo(({ child }) => {
       .startOf("week")
       .add(1, "days")
       .format("YYYY-MM-DD");
-    console.log(startWeeklyDate.format("d") === "0", { isRegularDone });
+
     if (startWeeklyDate.format("d") === "0") {
       results.push(mondayInCurrentWeek);
     }

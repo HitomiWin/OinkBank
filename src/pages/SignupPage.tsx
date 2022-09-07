@@ -32,7 +32,7 @@ export const SignupPage: VFC = memo(() => {
       await signup(emailRef.current.value, passwordRef.current.value);
       navigate("/");
     } catch (e: any) {
-      setError(e.message);
+      setError("Something went wrong!");
       setLoading(false);
     }
   };
@@ -48,7 +48,7 @@ export const SignupPage: VFC = memo(() => {
                 Sign Up
               </Card.Title>
 
-              {error && <Alert variant="danger">{error}</Alert>}
+              {error && <p className="text-center text-danger">{error}</p>}
 
               <Form onSubmit={handleSubmit}>
                 <Form.Group id="email" className="mb-3  text-secondary">
@@ -72,7 +72,7 @@ export const SignupPage: VFC = memo(() => {
                     required
                   />
                 </Form.Group>
-                <div className="text-start pt-3">
+                <div className="text-center pt-3">
                   <Button
                     disabled={loading}
                     type="submit"
