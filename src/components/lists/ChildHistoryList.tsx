@@ -37,7 +37,7 @@ export const ChildHistoryList: VFC = memo(() => {
   const totalAmount = useGetTotalAmount(id ?? "");
 
   const popover = (
-    <Popover id="popover-basic">
+    <Popover id="popover-amount">
       <Popover.Body>
         Keep track of your spending below by entering the anount. Any
         withdrawals can simply be entered with a minus sign in front of the sum
