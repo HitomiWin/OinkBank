@@ -1,9 +1,21 @@
 import React, { useRef, useState, VFC, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { serverTimestamp } from "firebase/firestore";
-import { Row, Col, Form, Button, Card, Alert } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Form,
+  Button,
+  Card,
+  Alert,
+  OverlayTrigger,
+  Popover,
+} from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+
 import { useAuthContext } from "../../contexts/AuthContext";
 import { ChildQuery } from "../../shared/interfaces";
 import useAddChild from "../../hooks/useAddChild";
@@ -17,6 +29,17 @@ export const AddChildForm: VFC = memo(() => {
   const { currentUser } = useAuthContext();
 
   const childQuery: ChildQuery = useAddChild();
+  const popover = (
+    <Popover id="popover-frequency">
+      <Popover.Body>
+        How often would you like to deposit to reoccur?
+        <br />
+        Weekly: "Every Monday",
+        <br />
+        Monthly: "First of the month"
+      </Popover.Body>
+    </Popover>
+  );
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -61,6 +84,7 @@ export const AddChildForm: VFC = memo(() => {
                     <Col
                       xs={{ span: 12, order: 2, offset: 0 }}
                       md={{ span: 3, order: 1, offset: 0 }}
+                      className="align-self-center"
                     >
                       <Form.Label>Name</Form.Label>
                     </Col>
@@ -80,7 +104,7 @@ export const AddChildForm: VFC = memo(() => {
 
                 <Form.Group id="price" className="mb-3  text-secondary">
                   <Row>
-                    <Col xs={12} md={3}>
+                    <Col xs={12} md={3} className="align-self-center">
                       <Form.Label>Deposit</Form.Label>
                     </Col>
                     <Col>
@@ -99,16 +123,10 @@ export const AddChildForm: VFC = memo(() => {
 
                 <Form.Group id="frequency" className="mb-3 text-secondary">
                   <Row>
-                    <Col
-                      xs={{ span: 12, order: 2, offset: 0 }}
-                      md={{ span: 3, order: 1, offset: 0 }}
-                    >
+                    <Col xs={12} md={3} className="align-self-center">
                       <Form.Label>Frequency</Form.Label>
                     </Col>
-                    <Col
-                      xs={{ span: 12, order: 2, offset: 0 }}
-                      md={{ span: 7, offset: 0, order: 2 }}
-                    >
+                    <Col>
                       <Form.Select
                         aria-label="frequency"
                         className="frequency-select"
@@ -121,6 +139,22 @@ export const AddChildForm: VFC = memo(() => {
                         <option value="1">Weekly</option>
                         <option value="2">Monthly</option>
                       </Form.Select>
+                    </Col>
+                    <Col xs={2} className="d-flex">
+                      <OverlayTrigger
+                        trigger="click"
+                        key="top"
+                        placement="top"
+                        overlay={popover}
+                      >
+                        <div className="mb-0 align-self-end">
+                          <FontAwesomeIcon
+                            icon={faInfoCircle}
+                            color="rgb(24, 24, 82)"
+                            className="hover-icon circle-info"
+                          />
+                        </div>
+                      </OverlayTrigger>
                     </Col>
                   </Row>
                 </Form.Group>

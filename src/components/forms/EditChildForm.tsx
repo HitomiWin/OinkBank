@@ -2,7 +2,19 @@ import React, { useRef, useState, VFC, memo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { DocumentData } from "firebase/firestore";
-import { Row, Col, Form, Button, Card, Alert } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Form,
+  Button,
+  Card,
+  Alert,
+  OverlayTrigger,
+  Popover,
+} from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+
 import useEditChild from "../../hooks/useEditChild";
 
 interface Props {
@@ -17,6 +29,17 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
   const [priceValue, setPriceValue] = useState<string>("");
   const [nameValue, setNameValue] = useState<string>("");
   const mutation = useEditChild();
+  const popover = (
+    <Popover id="popover-frequency">
+      <Popover.Body>
+        How often would you like to deposit to reoccur?
+        <br />
+        Weekly: "Every Monday",
+        <br />
+        Monthly: "First of the month"
+      </Popover.Body>
+    </Popover>
+  );
   const navigate = useNavigate();
   useEffect(() => {
     setIsWeekly(child.isWeekly);
@@ -63,6 +86,7 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
                     <Col
                       xs={{ span: 12, order: 2, offset: 0 }}
                       md={{ span: 3, order: 1, offset: 0 }}
+                      className="align-self-center"
                     >
                       <Form.Label>Name</Form.Label>
                     </Col>
@@ -81,7 +105,7 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
 
                 <Form.Group id="price" className="mb-3  text-secondary">
                   <Row>
-                    <Col xs={12} md={3}>
+                    <Col xs={12} md={3} className="align-self-center">
                       <Form.Label>Deposit</Form.Label>
                     </Col>
                     <Col>
@@ -100,16 +124,10 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
 
                 <Form.Group id="frequency" className="mb-3 text-secondary">
                   <Row>
-                    <Col
-                      xs={{ span: 12, order: 2, offset: 0 }}
-                      md={{ span: 3, order: 1, offset: 0 }}
-                    >
+                    <Col xs={12} md={3} className="align-self-center">
                       <Form.Label>Frequency</Form.Label>
                     </Col>
-                    <Col
-                      xs={{ span: 12, order: 2, offset: 0 }}
-                      md={{ span: 7, offset: 0, order: 2 }}
-                    >
+                    <Col>
                       <Form.Select
                         aria-label="frequency"
                         className="frequency-select"
@@ -127,6 +145,22 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
                           Monthly
                         </option>
                       </Form.Select>
+                    </Col>
+                    <Col xs={2} className="d-flex">
+                      <OverlayTrigger
+                        trigger="click"
+                        key="top"
+                        placement="top"
+                        overlay={popover}
+                      >
+                        <div className="mb-0 align-self-end">
+                          <FontAwesomeIcon
+                            icon={faInfoCircle}
+                            color="rgb(24, 24, 82)"
+                            className="hover-icon circle-info"
+                          />
+                        </div>
+                      </OverlayTrigger>
                     </Col>
                   </Row>
                 </Form.Group>
