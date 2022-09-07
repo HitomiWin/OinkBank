@@ -5,9 +5,11 @@ export const ChildHistoryPage = () => {
 
   return (
     <>
-      <p className="back-button" onClick={() => navigate(-1)}>
-        Back
-      </p>
+      <div className="d-flex justify-content-start">
+        <p className="back-button col-1" onClick={() => navigate(-1)}>
+          Back
+        </p>
+      </div>
       <ChildHistoryList />
     </>
   );

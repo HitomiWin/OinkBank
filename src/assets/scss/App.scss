@@ -48,31 +48,15 @@ p {
   border-bottom: solid 1px #8080804d;
 }
 
-.dropdown-item.active,
-.dropdown-item:active {
+.dropdown-item:hover {
   background-color: rgb(23, 23, 77);
+  color: white;
 }
 .back-button {
   text-decoration: underline;
   &:hover {
     cursor: pointer;
     color: #b38614;
-  }
-}
-
-.btn.frequency-button {
-  &.active {
-    color: white;
-    border: white;
-    background-color: #b38614;
-  }
-  &.inactive {
-    color: white;
-    border: white;
-    background-color: #7070704d;
-    &:hover {
-      background-color: #b38614;
-    }
   }
 }
 
@@ -95,40 +79,4 @@ p {
 }
 .tooltip.bs-tooltip-right .tooltip-arrow::before {
   border-right-color: rgb(23, 23, 77) !important;
-}
-
-.user-circle-icon {
-  font-size: 48px;
-}
-
-// .flowing {
-//   white-space: nowrap;
-//   overflow: hidden;
-//   animation: flowing-anim 3s forwards linear;
-// }
-
-// @keyframes flowing-anim {
-//   0% {
-//     width: 0%;
-//   }
-//   100% {
-//     width: 100%;
-//   }
-// }
-
-@media only screen and (max-device-width: 480px) {
-  // h3,
-  // h4,
-  // h5 {
-  //   font-size: 16px;
-  //   font-weight: 500;
-  // }
-  // h6,
-  // p {
-  //   font-size: 12px;
-  // }
-  // .flowing,
-  // .no-child-text {
-  //   font-size: 12px;
-  // }
 }

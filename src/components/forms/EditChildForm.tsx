@@ -111,7 +111,8 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
                       md={{ span: 7, offset: 0, order: 2 }}
                     >
                       <Form.Select
-                        aria-label="frequency select"
+                        aria-label="frequency"
+                        className="frequency-select"
                         onChange={(e) =>
                           e.target.value === "1"
                             ? setIsWeekly(true)
@@ -119,8 +120,12 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
                         }
                         defaultValue={isWeekly ? "1" : "2"}
                       >
-                        <option value="1">Weekly</option>
-                        <option value="2">Monthly</option>
+                        <option className="frequency-option" value="1">
+                          Weekly
+                        </option>
+                        <option className="frequency-option" value="2">
+                          Monthly
+                        </option>
                       </Form.Select>
                     </Col>
                   </Row>
