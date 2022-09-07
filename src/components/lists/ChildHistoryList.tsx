@@ -126,12 +126,12 @@ export const ChildHistoryList: VFC = memo(() => {
                     placeholder="Enter amount ex. 10, -10"
                     ref={priceRef}
                   />
-                  <div className="d-flex justify-content-end my-3">
+                  <div className="text-center px-3 pt-3">
                     <Button
                       type="submit"
                       variant="primary"
                       disabled={transactionsQuery.isLoading === true}
-                      className="text-info ml-auto"
+                      className="text-info px-5"
                     >
                       Save
                     </Button>
