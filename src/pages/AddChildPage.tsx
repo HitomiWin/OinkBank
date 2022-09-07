@@ -6,9 +6,11 @@ export const AddChildPage: VFC = memo(() => {
   const navigate = useNavigate();
   return (
     <>
-      <p className="back-button" onClick={() => navigate(-1)}>
-        Back
-      </p>
+      <div className="d-flex justify-content-start">
+        <p className="back-button col-1" onClick={() => navigate(-1)}>
+          Back
+        </p>
+      </div>
       <h2 className="text-center my-md-4 my-3">Add Child</h2>
       <AddChildForm />
     </>

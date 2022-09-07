@@ -60,13 +60,13 @@ export const AddChildForm: VFC = memo(() => {
                   <Row>
                     <Col
                       xs={{ span: 12, order: 2, offset: 0 }}
-                      md={{ span: 2, order: 1, offset: 0 }}
+                      md={{ span: 3, order: 1, offset: 0 }}
                     >
                       <Form.Label>Name</Form.Label>
                     </Col>
                     <Col
                       xs={{ span: 12, order: 2, offset: 0 }}
-                      md={{ span: 8, offset: 0, order: 2 }}
+                      md={{ span: 7, offset: 0, order: 2 }}
                     >
                       <Form.Control
                         type="text"
@@ -80,7 +80,7 @@ export const AddChildForm: VFC = memo(() => {
 
                 <Form.Group id="price" className="mb-3  text-secondary">
                   <Row>
-                    <Col xs={12} md={2}>
+                    <Col xs={12} md={3}>
                       <Form.Label>Deposit</Form.Label>
                     </Col>
                     <Col>
@@ -99,28 +99,37 @@ export const AddChildForm: VFC = memo(() => {
 
                 <Form.Group id="frequency" className="mb-3 text-secondary">
                   <Row>
-                    <Col xs={12}>
+                    <Col
+                      xs={{ span: 12, order: 2, offset: 0 }}
+                      md={{ span: 3, order: 1, offset: 0 }}
+                    >
                       <Form.Label>Frequency</Form.Label>
                     </Col>
-                    <Form.Select
-                      aria-label="frequency select"
-                      onChange={(e) =>
-                        e.target.value === "1"
-                          ? setIsWeekly(true)
-                          : setIsWeekly(false)
-                      }
+                    <Col
+                      xs={{ span: 12, order: 2, offset: 0 }}
+                      md={{ span: 7, offset: 0, order: 2 }}
                     >
-                      <option value="1">Weekly</option>
-                      <option value="2">Monthly</option>
-                    </Form.Select>
+                      <Form.Select
+                        aria-label="frequency"
+                        className="frequency-select"
+                        onChange={(e) =>
+                          e.target.value === "1"
+                            ? setIsWeekly(true)
+                            : setIsWeekly(false)
+                        }
+                      >
+                        <option value="1">Weekly</option>
+                        <option value="2">Monthly</option>
+                      </Form.Select>
+                    </Col>
                   </Row>
                 </Form.Group>
                 <Row>
-                  <Col xs={{ offset: 8 }}>
+                  <Col className="text-center">
                     <Button
                       disabled={childQuery.isLoading || isWeekly === null}
                       type="submit"
-                      className="text-info px-3 mt-1"
+                      className="text-info mt-1 px-5"
                     >
                       Save
                     </Button>
