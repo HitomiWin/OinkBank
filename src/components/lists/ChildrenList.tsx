@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Alert, Spinner, Button } from "react-bootstrap";
 import { ChildCard } from "../cards/ChildCard";
 import useGetChildren from "../../hooks/useGetChildren";
-import { Wellcome } from "../../pages/partials/Wellcome";
 
 export const ChildrenList: VFC = memo(() => {
   const childrenQuery = useGetChildren();
@@ -42,14 +41,13 @@ export const ChildrenList: VFC = memo(() => {
   ) : (
     <>
       <div>
-        <Wellcome />
-        <div>
-          <p className="text-primary text-center no-child-text my-5">
-            Simply choose the abount to deposit and how often the deposit should
-            reoccur.Start now by adding a child below!
-          </p>
-        </div>
+        <p className="text-primary text-center no-child-text my-5">
+          Oink Bank makes it easy to track allowances for kids. Simply choose
+          the amount to deposit and how often the deposit should occur.
+        </p>
+        <p className="text-center">Start now by adding a child below!</p>
       </div>
+
       <div className="text-center my-2">
         <Button
           variant="primary"
@@ -62,5 +60,5 @@ export const ChildrenList: VFC = memo(() => {
         </Button>
       </div>
     </>
-  )
-})
+  );
+});

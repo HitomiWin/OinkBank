@@ -32,7 +32,7 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
   const popover = (
     <Popover id="popover-frequency">
       <Popover.Body>
-        How often would you like to deposit to reoccur?
+        How often would you like to deposit to occur?
         <br />
         Weekly: "Every Monday",
         <br />

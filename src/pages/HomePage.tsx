@@ -5,7 +5,7 @@ import { ChildrenList } from "../components/lists/ChildrenList";
 export const HomePage: VFC = memo(() => {
   return (
     <Container>
-      <ChildrenList />;
+      <ChildrenList />
     </Container>
   );
 });
