@@ -32,7 +32,14 @@ export const SignupPage: VFC = memo(() => {
       await signup(emailRef.current.value, passwordRef.current.value);
       navigate("/");
     } catch (e: any) {
-      setError("Something went wrong!");
+      if (e.code.includes("network-request-failed")) {
+        setError("Network request failed");
+      } else if (e.code.includes("email-already-in-use")) {
+        setError("This email is alredady in use");
+      } else {
+        console.error(e.message);
+        setError("Something went wrong");
+      }
       setLoading(false);
     }
   };

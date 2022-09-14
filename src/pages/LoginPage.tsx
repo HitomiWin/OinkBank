@@ -23,9 +23,15 @@ export const LoginPage: VFC = memo(() => {
         await login(emailRef.current.value, passwordRef.current.value);
         navigate("/");
       } catch (e: any) {
-        if (e.code.includes("auth")) {
+        if (e.code.includes("network-request-failed")) {
+          setError("Network request failed");
+        } else if (
+          e.code.includes("user-not-found") ||
+          e.code.includes("wrong-password")
+        ) {
           setError("Bad Credentials.");
         } else {
+          console.error(e.message);
           setError("Something went wrong");
         }
         setLoading(false);
