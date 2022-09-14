@@ -1,7 +1,8 @@
 import React, { useRef, useState, VFC, memo } from "react";
-import { Row, Col, Form, Button, Card, Alert } from "react-bootstrap";
+import { Row, Col, Form, Button, Card } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../contexts/AuthContext";
+import { Wellcome } from "./partials/Wellcome";
 
 export const SignupPage: VFC = memo(() => {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -31,14 +32,22 @@ export const SignupPage: VFC = memo(() => {
       await signup(emailRef.current.value, passwordRef.current.value);
       navigate("/");
     } catch (e: any) {
-      setError(e.message);
+      if (e.code.includes("network-request-failed")) {
+        setError("Network request failed");
+      } else if (e.code.includes("email-already-in-use")) {
+        setError("This email is alredady in use");
+      } else {
+        console.error(e.message);
+        setError("Something went wrong");
+      }
       setLoading(false);
     }
   };
 
   return (
     <>
-      <Row>
+      <Wellcome />
+      <Row className="py-3">
         <Col xs={12} md={{ span: 8, offset: 2 }} lg={{ span: 6, offset: 3 }}>
           <Card className="rounded-lg px-3">
             <Card.Body>
@@ -46,7 +55,7 @@ export const SignupPage: VFC = memo(() => {
                 Sign Up
               </Card.Title>
 
-              {error && <Alert variant="danger">{error}</Alert>}
+              {error && <p className="text-center text-danger">{error}</p>}
 
               <Form onSubmit={handleSubmit}>
                 <Form.Group id="email" className="mb-3  text-secondary">
@@ -70,13 +79,18 @@ export const SignupPage: VFC = memo(() => {
                     required
                   />
                 </Form.Group>
-
-                <Button disabled={loading} type="submit" className="text-info">
-                  Create Account
-                </Button>
+                <div className="text-center pt-3">
+                  <Button
+                    disabled={loading}
+                    type="submit"
+                    className="text-info"
+                  >
+                    Create Account
+                  </Button>
+                </div>
               </Form>
             </Card.Body>
-            <div className="text-center m-3 text-primary">
+            <div className="text-center mb-3 text-primary">
               Already have an account?{" "}
               <Link to="/login" className="text-primary">
                 Log In

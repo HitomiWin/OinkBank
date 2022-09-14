@@ -8,12 +8,14 @@ import {
   Button,
   Card,
   Alert,
-  ButtonGroup,
+  OverlayTrigger,
+  Popover,
 } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+
 import { useAuthContext } from "../../contexts/AuthContext";
 import { ChildQuery } from "../../shared/interfaces";
 import useAddChild from "../../hooks/useAddChild";
@@ -27,6 +29,17 @@ export const AddChildForm: VFC = memo(() => {
   const { currentUser } = useAuthContext();
 
   const childQuery: ChildQuery = useAddChild();
+  const popover = (
+    <Popover id="popover-frequency">
+      <Popover.Body>
+        How often would you like to deposit to occur?
+        <br />
+        Weekly: "Every Monday",
+        <br />
+        Monthly: "First of the month"
+      </Popover.Body>
+    </Popover>
+  );
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -57,37 +70,33 @@ export const AddChildForm: VFC = memo(() => {
   }
   return (
     <>
-      <Row>
+      <Row className="mt-3">
         <Col
           xs={{ span: 12 }}
           md={{ span: 8, offset: 2 }}
           lg={{ span: 6, offset: 3 }}
         >
-          <Card className="rounded-lg">
+          <Card className="rounded-lg p-3">
             <Card.Body>
               <Form onSubmit={handleSubmit}>
                 <Form.Group id="name" className="mb-3  text-secondary">
                   <Row>
                     <Col
                       xs={{ span: 12, order: 2, offset: 0 }}
-                      md={{ span: 2, order: 1, offset: 0 }}
+                      md={{ span: 3, order: 1, offset: 0 }}
+                      className="align-self-center"
                     >
                       <Form.Label>Name</Form.Label>
                     </Col>
                     <Col
                       xs={{ span: 12, order: 2, offset: 0 }}
-                      md={{ span: 8, offset: 0, order: 2 }}
+                      md={{ span: 7, offset: 0, order: 2 }}
                     >
-                      <Form.Control type="text" ref={nameRef} required />
-                    </Col>
-                    <Col
-                      xs={{ span: 2, order: 1, offset: 9 }}
-                      md={{ span: 2, order: 3, offset: 0 }}
-                    >
-                      <FontAwesomeIcon
-                        icon={faUserCircle}
-                        color="#D7D4D4"
-                        size="3x"
+                      <Form.Control
+                        type="text"
+                        maxLength={10}
+                        ref={nameRef}
+                        required
                       />
                     </Col>
                   </Row>
@@ -95,7 +104,7 @@ export const AddChildForm: VFC = memo(() => {
 
                 <Form.Group id="price" className="mb-3  text-secondary">
                   <Row>
-                    <Col xs={12} md={2}>
+                    <Col xs={12} md={3} className="align-self-center">
                       <Form.Label>Deposit</Form.Label>
                     </Col>
                     <Col>
@@ -114,51 +123,47 @@ export const AddChildForm: VFC = memo(() => {
 
                 <Form.Group id="frequency" className="mb-3 text-secondary">
                   <Row>
-                    <Col xs={12}>
+                    <Col xs={12} md={3} className="align-self-center">
                       <Form.Label>Frequency</Form.Label>
                     </Col>
-                    <ButtonGroup>
-                      <Col
-                        xs={{ span: 2, offset: 0 }}
-                        md={{ span: 2, offset: 2 }}
+                    <Col>
+                      <Form.Select
+                        aria-label="frequency"
+                        className="frequency-select"
+                        onChange={(e) =>
+                          e.target.value === "1"
+                            ? setIsWeekly(true)
+                            : setIsWeekly(false)
+                        }
                       >
-                        <Button
-                          className={`frequency-button ${
-                            isWeekly ? "active" : "inactive"
-                          }`}
-                          onClick={() => setIsWeekly(!isWeekly)}
-                          disabled={isWeekly}
-                        >
-                          Weekly
-                        </Button>
-                      </Col>
-                      <Col
-                        xs={{ span: 2, offset: 6 }}
-                        md={{ span: 2, offset: 3 }}
+                        <option value="1">Weekly</option>
+                        <option value="2">Monthly</option>
+                      </Form.Select>
+                    </Col>
+                    <Col xs={2} className="d-flex">
+                      <OverlayTrigger
+                        trigger="click"
+                        key="top"
+                        placement="top"
+                        overlay={popover}
                       >
-                        <Button
-                          className={`frequency-button ${
-                            !isWeekly ? "active" : "inactive"
-                          }`}
-                          onClick={() => setIsWeekly(!isWeekly)}
-                          disabled={!isWeekly}
-                        >
-                          Monthly
-                        </Button>
-                      </Col>
-                    </ButtonGroup>
+                        <div className="mb-0 align-self-end">
+                          <FontAwesomeIcon
+                            icon={faInfoCircle}
+                            color="rgb(24, 24, 82)"
+                            className="hover-icon circle-info"
+                          />
+                        </div>
+                      </OverlayTrigger>
+                    </Col>
                   </Row>
                 </Form.Group>
                 <Row>
-                  <Col
-                    xs={{ span: 2, offset: 8 }}
-                    md={{ span: 2, offset: 9 }}
-                    lg={{ span: 2, offset: 10 }}
-                  >
+                  <Col className="text-center">
                     <Button
                       disabled={childQuery.isLoading || isWeekly === null}
                       type="submit"
-                      className="text-info px-3 mt-1"
+                      className="text-info mt-1 px-5"
                     >
                       Save
                     </Button>

@@ -24,10 +24,12 @@ export const EditChildPage: VFC = memo(() => {
   }
   return childQuery.data ? (
     <>
-      <p className="back-button" onClick={() => navigate(-1)}>
-        Back
-      </p>
-      <h3 className="text-center">Edit {childQuery.data.name} </h3>
+      <div className="d-flex justify-content-start">
+        <p className="back-button col-1" onClick={() => navigate(-1)}>
+          Back
+        </p>
+      </div>
+      <h2 className="text-center">Edit {childQuery.data.name} </h2>
       <EditChildForm id={id ?? ""} child={childQuery.data} />
     </>
   ) : null;

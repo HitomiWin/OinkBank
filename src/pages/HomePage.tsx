@@ -4,8 +4,8 @@ import { ChildrenList } from "../components/lists/ChildrenList";
 
 export const HomePage: VFC = memo(() => {
   return (
-    <Container className="my-4">
-      <ChildrenList />;
+    <Container>
+      <ChildrenList />
     </Container>
   );
 });

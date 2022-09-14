@@ -1,7 +1,19 @@
 import React, { memo, VFC, useRef } from "react";
-import { Row, Col, Card, Button, Form, Spinner, Alert } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Card,
+  Button,
+  Form,
+  Spinner,
+  Alert,
+  Container,
+  OverlayTrigger,
+  Popover,
+} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+
 import { useParams } from "react-router-dom";
 import { DocumentData, serverTimestamp } from "firebase/firestore";
 import moment from "moment";
@@ -23,6 +35,15 @@ export const ChildHistoryList: VFC = memo(() => {
   const transactionsQuery = useAddTransactions(id ?? "");
   const transActions = useGetTransactions(id ?? "");
   const totalAmount = useGetTotalAmount(id ?? "");
+
+  const popover = (
+    <Popover id="popover-amount">
+      <Popover.Body>
+        Keep track of your spending below by entering the anount. Any
+        withdrawals can simply be entered with a minus sign in front of the sum
+      </Popover.Body>
+    </Popover>
+  );
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const isRegular = false;
@@ -58,87 +79,94 @@ export const ChildHistoryList: VFC = memo(() => {
     priceRef.current.value = "";
   }
   return transactionsQuery && child && child.data ? (
-    <>
-      <Row>
+    <Container>
+      <Row className="justify-content-center">
         <Col
           xs={{ span: 12 }}
-          md={{ span: 8, offset: 2 }}
-          lg={{ span: 6, offset: 3 }}
+          md={{ span: 8 }}
+          lg={{ span: 6 }}
+          className="py-2"
         >
-          <Row className="d-f align-items-center">
-            <Col xs={{ span: 2, offset: 1 }} md={{ span: 2, offset: 1 }}>
-              <FontAwesomeIcon
-                icon={faUserCircle}
-                color="rgb(23, 23, 77)"
-                size="3x"
-              />
+          <Row className="d-f align-items-center justify-content-between py-0 px-lg-5 px-md-3 m-0 bg-info rounded">
+            <Col xs={{ span: 5 }}>
+              <h2 className="my-3">{child.data.name}</h2>
             </Col>
-            <Col xs={{ span: 3 }} md={{ span: 2 }}>
-              <h3>{child.data.name}</h3>
-            </Col>
-            <Col xs={{ span: 4, offset: 2 }} md={{ span: 3, offset: 4 }}>
-              <Col>
-                <h5>Total</h5>
-              </Col>
-              <Col>
-                <h4>{totalAmount} kr</h4>
-              </Col>
+            <Col xs={{ span: 5 }} className="text-end">
+              <h4 className="mt-3">{totalAmount} kr</h4>
             </Col>
           </Row>
-          <Card className="mt-3">
-            <Card.Body>
+          <div className="mt-3 px-lg-5 px-md-3 py-3 bg-info rounded">
+            <Card.Body className="pb-4 mb-4 deposit-wrapper">
               {transactionsQuery.isError && (
                 <Alert variant="danger"> {transactionsQuery.error} </Alert>
               )}
-              <Card.Title className="text-secondary text-center mb-4">
-                Deposit or withdraw amount
-              </Card.Title>
+              <div className="mb-4 d-flex justify-content-center align-items-start">
+                <h4 className=" text-secondary">
+                  Deposit or withdraw amount &nbsp;
+                </h4>
+                <OverlayTrigger
+                  trigger="click"
+                  key="top"
+                  placement="top"
+                  overlay={popover}
+                >
+                  <div className="mx-2 pt-1">
+                    <FontAwesomeIcon
+                      icon={faInfoCircle}
+                      color="rgb(24, 24, 82)"
+                      className="hover-icon circle-info"
+                    />
+                  </div>
+                </OverlayTrigger>
+              </div>
               <Form onSubmit={handleOnSubmit}>
-                <Form.Group controlId="formBasicEmail">
-                  <Row className="justify-content-center align-items-center">
-                    <Col md={11} lg={10}>
-                      <Form.Control
-                        type="number"
-                        placeholder="Enter amount"
-                        ref={priceRef}
-                      />
-                    </Col>
-                  </Row>
-                  <Row className="justify-content-end px-2">
-                    <Col xs={2} className="mt-4 me-3">
-                      <Button
-                        type="submit"
-                        variant="primary"
-                        disabled={transactionsQuery.isLoading === true}
-                        className="text-info"
-                      >
-                        Save
-                      </Button>
-                    </Col>
-                  </Row>
-                </Form.Group>
+                <div>
+                  <Form.Control
+                    type="number"
+                    placeholder="Enter amount ex. 10, -10"
+                    ref={priceRef}
+                  />
+                  <div className="text-center px-3 pt-3">
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      disabled={transactionsQuery.isLoading === true}
+                      className="text-info px-5"
+                    >
+                      Save
+                    </Button>
+                  </div>
+                </div>
               </Form>
             </Card.Body>
-          </Card>
+            <div>
+              <h4 className="text-center">History of deposit or withdraw </h4>
+              <div className="px-2">
+                {transActions.isError && (
+                  <Alert variant="danger"> {transActions.error} </Alert>
+                )}
+                {transActions.isLoading && <p>Loading...</p>}
 
-          <h3 className="text-center my-4">History of deposit or withdraw </h3>
-          <Row className="justify-content-center">
-            {transActions.isError && (
-              <Alert variant="danger"> {transActions.error} </Alert>
-            )}
-            {transActions.isLoading && <p>Loading...</p>}
-
-            {transActions && transActions.data && transActions.data.length ? (
-              transActions.data.map((transaction) => (
-                <HistoryCard key={transaction.id} transaction={transaction} />
-              ))
-            ) : (
-              <h4 className="text-center my-4">No history</h4>
-            )}
-          </Row>
+                {transActions &&
+                transActions.data &&
+                transActions.data.length ? (
+                  transActions.data.map((transaction) => (
+                    <HistoryCard
+                      key={transaction.id}
+                      transaction={transaction}
+                    />
+                  ))
+                ) : (
+                  <div>
+                    <p className="text-center my-4">No history</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
         </Col>
       </Row>
-    </>
+    </Container>
   ) : (
     <p className="text-center">No Child</p>
   );

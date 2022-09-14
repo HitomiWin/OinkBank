@@ -9,10 +9,12 @@ import {
   Button,
   Card,
   Alert,
-  ButtonGroup,
+  OverlayTrigger,
+  Popover,
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+
 import useEditChild from "../../hooks/useEditChild";
 
 interface Props {
@@ -27,6 +29,17 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
   const [priceValue, setPriceValue] = useState<string>("");
   const [nameValue, setNameValue] = useState<string>("");
   const mutation = useEditChild();
+  const popover = (
+    <Popover id="popover-frequency">
+      <Popover.Body>
+        How often would you like to deposit to occur?
+        <br />
+        Weekly: "Every Monday",
+        <br />
+        Monthly: "First of the month"
+      </Popover.Body>
+    </Popover>
+  );
   const navigate = useNavigate();
   useEffect(() => {
     setIsWeekly(child.isWeekly);
@@ -68,17 +81,18 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
                 <Alert variant="danger">{mutation.error}</Alert>
               )}
               <Form onSubmit={handleSubmit}>
-                <Form.Group id="name" className="my-3  text-secondary">
+                <Form.Group id="name" className="mb-3  text-secondary">
                   <Row>
                     <Col
                       xs={{ span: 12, order: 2, offset: 0 }}
-                      md={{ span: 2, order: 1, offset: 0 }}
+                      md={{ span: 3, order: 1, offset: 0 }}
+                      className="align-self-center"
                     >
                       <Form.Label>Name</Form.Label>
                     </Col>
                     <Col
                       xs={{ span: 12, order: 2, offset: 0 }}
-                      md={{ span: 8, offset: 0, order: 2 }}
+                      md={{ span: 7, offset: 0, order: 2 }}
                     >
                       <Form.Control
                         type="text"
@@ -86,22 +100,12 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
                         defaultValue={nameValue}
                       />
                     </Col>
-                    <Col
-                      xs={{ span: 2, order: 1, offset: 9 }}
-                      md={{ span: 2, order: 3, offset: 0 }}
-                    >
-                      <FontAwesomeIcon
-                        icon={faUserCircle}
-                        color="#D7D4D4"
-                        size="3x"
-                      />
-                    </Col>
                   </Row>
                 </Form.Group>
 
                 <Form.Group id="price" className="mb-3  text-secondary">
                   <Row>
-                    <Col xs={12} md={2}>
+                    <Col xs={12} md={3} className="align-self-center">
                       <Form.Label>Deposit</Form.Label>
                     </Col>
                     <Col>
@@ -120,51 +124,52 @@ export const EditChildForm: VFC<Props> = memo(({ id, child }) => {
 
                 <Form.Group id="frequency" className="mb-3 text-secondary">
                   <Row>
-                    <Col xs={3} md={2}>
+                    <Col xs={12} md={3} className="align-self-center">
                       <Form.Label>Frequency</Form.Label>
                     </Col>
-                    <ButtonGroup className="mt-3">
-                      <Col
-                        xs={{ span: 2, offset: 0 }}
-                        md={{ span: 2, offset: 2 }}
+                    <Col>
+                      <Form.Select
+                        aria-label="frequency"
+                        className="frequency-select"
+                        onChange={(e) =>
+                          e.target.value === "1"
+                            ? setIsWeekly(true)
+                            : setIsWeekly(false)
+                        }
+                        defaultValue={isWeekly ? "1" : "2"}
                       >
-                        <Button
-                          className={`frequency-button ${
-                            isWeekly ? "active" : "inactive"
-                          }`}
-                          onClick={() => setIsWeekly(!isWeekly)}
-                          disabled={isWeekly}
-                        >
+                        <option className="frequency-option" value="1">
                           Weekly
-                        </Button>
-                      </Col>
-                      <Col
-                        xs={{ span: 2, offset: 6 }}
-                        md={{ span: 2, offset: 3 }}
-                      >
-                        <Button
-                          className={`frequency-button ${
-                            !isWeekly ? "active" : "inactive"
-                          }`}
-                          onClick={() => setIsWeekly(!isWeekly)}
-                          disabled={!isWeekly}
-                        >
+                        </option>
+                        <option className="frequency-option" value="2">
                           Monthly
-                        </Button>
-                      </Col>
-                    </ButtonGroup>
+                        </option>
+                      </Form.Select>
+                    </Col>
+                    <Col xs={2} className="d-flex">
+                      <OverlayTrigger
+                        trigger="click"
+                        key="top"
+                        placement="top"
+                        overlay={popover}
+                      >
+                        <div className="mb-0 align-self-end">
+                          <FontAwesomeIcon
+                            icon={faInfoCircle}
+                            color="rgb(24, 24, 82)"
+                            className="hover-icon circle-info"
+                          />
+                        </div>
+                      </OverlayTrigger>
+                    </Col>
                   </Row>
                 </Form.Group>
                 <Row>
-                  <Col
-                    xs={{ span: 2, offset: 8 }}
-                    md={{ span: 2, offset: 9 }}
-                    lg={{ span: 2, offset: 10 }}
-                  >
+                  <Col className="text-center">
                     <Button
                       disabled={mutation.isLoading}
                       type="submit"
-                      className="text-info mt-1"
+                      className="text-info mt-1 px-5"
                     >
                       Save
                     </Button>
